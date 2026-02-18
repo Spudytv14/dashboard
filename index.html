@@ -1,235 +1,1024 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spudy AI Command Center</title>
-    <style>
-        /* --- 1. CORE VARIABLES & THEME --- */
-        :root {
-            --bg-body: #0f1015;       /* Darker, "Server Room" Black */
-            --bg-card: #1b1d29;       /* Deep Blue-Grey */
-            --bg-sidebar: #15161e;
-            --text-main: #e0e0e0;
-            --text-muted: #808495;
-            
-            /* SPUDY BRAND COLORS */
-            --spudy-purple: #8c52ff;  /* The AI Brain */
-            --spudy-cyan: #00f2c3;    /* Success/Online */
-            --spudy-red: #ff3b3b;     /* Critical */
-            --spudy-gold: #ffd700;    /* Premium/Revenue */
-            
-            --sidebar-width: 260px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Midlands Blind Connect | MSU Dating</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; } /* Tech font */
-        
-        body { background-color: var(--bg-body); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        /* --- 2. SIDEBAR (The Control Panel) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--bg-sidebar);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(140, 82, 255, 0.2); /* Purple border */
-        }
+  <style>
+    :root{
+      --msu-blue:#003366;
+      --msu-red:#b30000;
+      --msu-gold:#FFD700;
 
-        .brand { 
-            font-size: 22px; 
-            font-weight: bold; 
-            margin-bottom: 40px; 
-            letter-spacing: 1px;
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-        }
-        
-        .brand-dot { width: 12px; height: 12px; background: var(--spudy-purple); border-radius: 50%; box-shadow: 0 0 10px var(--spudy-purple); }
+      --bg0:#f5f7fb;
+      --card:#ffffff;
+      --text:#101828;
+      --muted:#667085;
+      --line:rgba(16,24,40,.10);
 
-        .nav-category { font-size: 0.75rem; color: var(--text-muted); margin-top: 20px; margin-bottom: 10px; text-transform: uppercase; }
+      --shadow: 0 18px 50px rgba(16,24,40,.12);
+      --shadow-soft: 0 10px 25px rgba(16,24,40,.10);
+      --radius: 18px;
 
-        .nav-item {
-            padding: 12px;
-            color: var(--text-muted);
-            cursor: pointer;
-            border-radius: 4px;
-            margin-bottom: 5px;
-            transition: 0.3s;
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 0.95rem;
-        }
-        .nav-item:hover, .nav-item.active { 
-            background-color: rgba(140, 82, 255, 0.1); 
-            color: var(--spudy-purple); 
-            border-left: 3px solid var(--spudy-purple);
-        }
+      --focus: 0 0 0 4px rgba(255,215,0,.35);
+    }
 
-        /* --- 3. MAIN DASHBOARD --- */
-        .main-content {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans","Segoe UI",Tahoma,Verdana,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 18% -10%, rgba(0,51,102,.18), transparent 55%),
+        radial-gradient(700px 420px at 85% 0%, rgba(255,215,0,.16), transparent 55%),
+        linear-gradient(180deg, var(--bg0), #eef2f8 70%, #eef2f8);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
 
-        /* SPUDY AI HEADER WIDGET */
-        .ai-header {
-            background: linear-gradient(90deg, #1b1d29 0%, #2a1f3d 100%);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(140, 82, 255, 0.3);
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      background: rgba(0,51,102,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      user-select:none;
+    }
+    .mark{
+      width:34px;height:34px;
+      border-radius:12px;
+      display:grid;place-items:center;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,215,0,.9), rgba(255,215,0,.15)),
+        rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+      font-weight:800;
+      color: #0b2a52;
+    }
+    .logo{
+      font-weight:800;
+      letter-spacing:.2px;
+      font-size:1.05rem;
+      line-height:1.1;
+    }
+    .logo span{color:var(--msu-gold)}
+    .subbrand{
+      font-size:.78rem;
+      color:rgba(255,255,255,.72);
+      margin-top:2px;
+    }
+    .brandText{display:flex;flex-direction:column}
 
-        .ai-status { display: flex; align-items: center; gap: 15px; }
-        .ai-pulse {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--spudy-purple);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 15px var(--spudy-purple);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(140, 82, 255, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(140, 82, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(140, 82, 255, 0); } }
+    .logout-btn{
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      display:none;
+      font-weight:600;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .logout-btn:hover{background: rgba(255,255,255,.12)}
+    .logout-btn:active{transform: scale(.98)}
+    .logout-btn:focus-visible{outline:none; box-shadow: var(--focus)}
 
-        /* GRID LAYOUTS */
-        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
-        
-        .card {
-            background-color: var(--bg-card);
-            padding: 20px;
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+    .screen{
+      display:none;
+      height:100%;
+      flex:1;
+      overflow:auto;
+      padding:24px 16px;
+    }
+    .screen.active{display:flex}
 
-        .card-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
-        .card-value { font-size: 1.8rem; font-weight: bold; font-family: 'Segoe UI', sans-serif; }
-        .card-sub { font-size: 0.8rem; margin-top: 5px; }
+    .login-wrap{
+      width:100%;
+      max-width: 980px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .login-wrap{grid-template-columns:1fr}
+      body{overflow:auto}
+    }
 
-        /* SERVER TERMINAL SECTION */
-        .split-view { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; flex: 1; }
+    .hero{
+      border-radius: var(--radius);
+      background:
+        radial-gradient(800px 300px at 20% 10%, rgba(255,215,0,.18), transparent 60%),
+        radial-gradient(800px 420px at 85% 20%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(135deg, rgba(0,51,102,.96), rgba(0,34,68,.96));
+      color:#fff;
+      box-shadow: var(--shadow);
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-60px -60px auto auto;
+      width:220px; height:220px;
+      background: radial-gradient(circle, rgba(255,215,0,.35), transparent 65%);
+      transform: rotate(20deg);
+      pointer-events:none;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:1.8rem;
+      letter-spacing:.2px;
+      line-height:1.15;
+    }
+    .hero p{
+      margin:0;
+      color:rgba(255,255,255,.78);
+      max-width: 44ch;
+      font-size:.95rem;
+      line-height:1.6;
+    }
+    .hero ul{
+      margin:18px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color:rgba(255,255,255,.80);
+      font-size:.92rem;
+    }
+    .hero li{display:flex; gap:10px; align-items:flex-start;}
+    .dot{
+      width:10px;height:10px;
+      margin-top:6px;
+      border-radius:999px;
+      background: var(--msu-gold);
+      box-shadow: 0 0 0 4px rgba(255,215,0,.18);
+      flex:0 0 auto;
+    }
+    .note{
+      font-size:.82rem;
+      color: rgba(255,255,255,.82);
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(255,255,255,.22);
+    }
 
-        .terminal-window {
-            background-color: #000;
-            border: 1px solid #333;
-            font-family: 'Courier New', monospace;
-            padding: 15px;
-            color: #0f0;
-            font-size: 0.85rem;
-            overflow-y: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .terminal-line { margin-bottom: 5px; }
-        .log-time { color: #666; margin-right: 10px; }
-        .log-warn { color: var(--spudy-gold); }
-        .log-err { color: var(--spudy-red); }
+    .panel{
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(16,24,40,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+    }
 
-        /* UTILS */
-        .text-purple { color: var(--spudy-purple); }
-        .text-cyan { color: var(--spudy-cyan); }
-        .text-red { color: var(--spudy-red); }
+    .login-box{
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .login-box h2{
+      margin:0 0 6px;
+      color: var(--msu-blue);
+      font-size:1.25rem;
+      letter-spacing:.2px;
+    }
+    .login-box p{
+      margin:0 0 16px;
+      color: var(--muted);
+      font-size:.92rem;
+      line-height:1.55;
+    }
 
-    </style>
+    .field{display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+    label{font-size:.85rem; color: var(--muted); font-weight:600;}
+    .input{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(16,24,40,.12);
+      background: rgba(255,255,255,.95);
+      color: var(--text);
+      font-size:.98rem;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .input::placeholder{color: rgba(102,112,133,.75)}
+    .input:focus{
+      outline:none;
+      border-color: rgba(255,215,0,.65);
+      box-shadow: var(--focus);
+    }
+
+    .btn{
+      width:100%;
+      padding:12px 14px;
+      border:none;
+      border-radius: 12px;
+      font-size: .98rem;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .15s ease, filter .15s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn:active{transform: scale(.99)}
+    .btn:focus-visible{outline:none; box-shadow: var(--focus)}
+    .btn-primary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--msu-blue), #022a55);
+      box-shadow: 0 10px 24px rgba(0,51,102,.22);
+    }
+    .btn-primary:hover{filter: brightness(1.03)}
+
+    .helper{
+      margin-top:12px;
+      color: rgba(102,112,133,.92);
+      font-size:.84rem;
+      line-height:1.45;
+    }
+    .error-msg{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      font-size:.88rem;
+      display:none;
+      background: rgba(179,0,0,.07);
+      border: 1px solid rgba(179,0,0,.18);
+      color: var(--msu-red);
+      font-weight:600;
+    }
+
+    /* APP */
+    .app-shell{
+      width:100%;
+      max-width: 980px;
+      margin: 0 auto;
+      display:grid;
+      grid-template-columns: 1fr 340px;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .app-shell{grid-template-columns:1fr}
+    }
+    .panelHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .panelHead h3{
+      margin:0;
+      font-size:1rem;
+      color: var(--msu-blue);
+      letter-spacing:.2px;
+    }
+    .statusPill{
+      font-size:.78rem;
+      font-weight:700;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,215,0,.16);
+      border:1px solid rgba(255,215,0,.28);
+      color: #4a3b00;
+    }
+    .panelBody{padding:16px}
+
+    .card-stack{
+      position:relative;
+      height: 560px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    @media (max-width: 520px){
+      .card-stack{height: 540px; padding:12px}
+    }
+
+    .profile-card{
+      width:100%;
+      max-width: 520px;
+      height:100%;
+      background: var(--card);
+      border-radius: 22px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(16,24,40,.08);
+      display:flex;
+      flex-direction:column;
+    }
+
+    .image-container{
+      flex: 1.35;
+      position:relative;
+      overflow:hidden;
+      background: #e7ecf3;
+    }
+    .image-container:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(16,24,40,.00) 55%, rgba(16,24,40,.35));
+      pointer-events:none;
+    }
+
+    .profile-img{
+      width:100%; height:100%;
+      object-fit: cover;
+      filter: blur(22px) saturate(.9);
+      transform: scale(1.05);
+      transition: filter 1.6s ease, transform 1.6s ease;
+      will-change: filter, transform;
+    }
+    .profile-img.revealed{
+      filter: blur(0) saturate(1);
+      transform: scale(1);
+    }
+
+    .blind-badge{
+      position:absolute;
+      left: 14px;
+      top: 14px;
+      z-index:2;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(0,51,102,.70);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      font-weight:800;
+      font-size:.82rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      pointer-events:none;
+    }
+    .blind-badge i{
+      width:8px;height:8px;border-radius:999px;background: var(--msu-gold);
+      box-shadow: 0 0 0 4px rgba(255,215,0,.18);
+    }
+
+    .card-details{
+      flex: 1;
+      padding:16px 16px 14px;
+      border-top: 4px solid var(--msu-red);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .topline{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .name{
+      margin:0;
+      font-size:1.3rem;
+      color: var(--msu-blue);
+      letter-spacing:.1px;
+      line-height:1.2;
+    }
+    .level{
+      font-size:.82rem;
+      font-weight:800;
+      color: rgba(16,24,40,.72);
+      background: rgba(16,24,40,.06);
+      border:1px solid rgba(16,24,40,.08);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .sub-info{
+      margin:0;
+      color: var(--muted);
+      font-size:.92rem;
+      line-height:1.4;
+    }
+    .bio{
+      margin:0;
+      color: rgba(16,24,40,.84);
+      font-size:.95rem;
+      line-height:1.55;
+    }
+
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:2px;
+    }
+    .tag{
+      font-size:.82rem;
+      font-weight:700;
+      color: rgba(0,51,102,.92);
+      background: rgba(0,51,102,.08);
+      border: 1px solid rgba(0,51,102,.10);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top:auto;
+    }
+    .btn-skip{
+      width:56px;
+      background: rgba(16,24,40,.06);
+      color: rgba(16,24,40,.72);
+      border:1px solid rgba(16,24,40,.10);
+      box-shadow:none;
+    }
+    .btn-skip:hover{filter: brightness(.98)}
+
+    .btn-reveal{
+      flex: 1;
+      color: #0b2a52;
+      background: linear-gradient(135deg, var(--msu-gold), #ffe889);
+      border:1px solid rgba(255,215,0,.55);
+      box-shadow: 0 14px 28px rgba(255,215,0,.18);
+    }
+    .btn-reveal:hover{filter: brightness(1.02)}
+
+    /* Sidebar */
+    .mini{display:grid; gap:12px;}
+    .miniCard{
+      padding:14px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(16,24,40,.10);
+      box-shadow: var(--shadow-soft);
+    }
+    .miniCard h4{
+      margin:0 0 8px;
+      font-size:.95rem;
+      color: var(--msu-blue);
+    }
+    .miniCard p{
+      margin:0;
+      color: var(--muted);
+      font-size:.88rem;
+      line-height:1.55;
+    }
+    .miniCard .note{
+      font-size:.82rem;
+      color: rgba(102,112,133,.9);
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(16,24,40,.14);
+    }
+
+    /* Chat modal */
+    .chat-overlay{
+      position:fixed; inset:0;
+      background: rgba(2, 16, 32, .55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:50;
+    }
+    .chat-box{
+      width:min(420px, 100%);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .chat-top{
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(16,24,40,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .chat-top h3{
+      margin:0;
+      color: var(--msu-blue);
+      font-size:1.05rem;
+      letter-spacing:.2px;
+    }
+    .xbtn{
+      width:38px;height:38px;
+      border-radius:12px;
+      border:1px solid rgba(16,24,40,.10);
+      background: rgba(16,24,40,.04);
+      cursor:pointer;
+      font-weight:900;
+      color: rgba(16,24,40,.70);
+    }
+    .xbtn:focus-visible{outline:none; box-shadow: var(--focus)}
+    .chat-body{
+      padding:16px;
+      text-align:left;
+      color: rgba(16,24,40,.80);
+      font-size:.92rem;
+      line-height:1.55;
+    }
+    .chat-actions{padding:16px}
+  </style>
 </head>
+
 <body>
-
-    <div class="sidebar">
-        <div class="brand">
-            <div class="brand-dot"></div> SPUDY SYS
-        </div>
-        
-        <div class="nav-category">Core Systems</div>
-        <div class="nav-item active">Master Control</div>
-        <div class="nav-item">Spudy Servers (Infrastructure)</div>
-        <div class="nav-item">Spudy AI Logic</div>
-
-        <div class="nav-category">Modules</div>
-        <div class="nav-item">Game Performance</div>
-        <div class="nav-item">Client Web Monitor</div>
-        <div class="nav-item">Marketing Auto-Pilot</div>
-        <div class="nav-item">Dev Pipeline</div>
+  <header>
+    <div class="brand" aria-label="Midlands Blind Connect">
+      <div class="mark">M</div>
+      <div class="brandText">
+        <div class="logo">Midlands<span>Blind</span></div>
+        <div class="subbrand">MSU student-only connect</div>
+      </div>
     </div>
+    <button id="logoutBtn" class="logout-btn" type="button" onclick="logout()">Logout</button>
+  </header>
 
-    <div class="main-content">
-        
-        <div class="ai-header">
-            <div class="ai-status">
-                <div class="ai-pulse">AI</div>
-                <div>
-                    <h3 style="margin: 0; font-family: 'Segoe UI'">Spudy AI is Active</h3>
-                    <span style="font-size: 0.8rem; color: var(--spudy-cyan);">System Optimized • Latency 12ms • 0 Threats</span>
-                </div>
-            </div>
-            <div style="text-align: right;">
-                <div style="font-size: 0.8rem; color: var(--text-muted);">COMPUTE LOAD</div>
-                <div style="font-weight: bold; color: var(--spudy-purple);">34% (Spudy Node 1-4)</div>
-            </div>
+  <!-- LOGIN -->
+  <section id="loginScreen" class="screen active" aria-label="Login screen">
+    <div class="login-wrap">
+      <div class="hero">
+        <div>
+          <h1>Connect with MSU students—privacy first.</h1>
+          <p>
+            Profiles stay blurred until both sides agree to reveal. Keep it respectful, safe, and campus-friendly.
+          </p>
+          <ul>
+            <li><span class="dot"></span><span><b>Blur-to-reveal</b> for discretion.</span></li>
+            <li><span class="dot"></span><span><b>Student verification</b> via MSU email.</span></li>
+            <li><span class="dot"></span><span><b>Simple matching</b> with a clean interface.</span></li>
+          </ul>
+        </div>
+        <div class="note">Tip: Use your correct Reg Number format (e.g. R123456X).</div>
+      </div>
+
+      <div class="login-box panel">
+        <h2>Campus Login</h2>
+        <p>Enter your Reg Number and MSU student email to verify access.</p>
+
+        <div class="field">
+          <label for="regNumber">Reg Number</label>
+          <input class="input" type="text" id="regNumber" placeholder="R123456X" autocomplete="off" />
         </div>
 
-        <div class="kpi-grid">
-            <div class="card">
-                <div class="card-header">Spudy Servers <span style="color: var(--spudy-cyan);">ONLINE</span></div>
-                <div class="card-value">99.98%</div>
-                <div class="card-sub text-purple">Load Balancing Active</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Live Players</div>
-                <div class="card-value">8,420</div>
-                <div class="card-sub text-cyan">▲ 120 in queue</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Ad AI ROI</div>
-                <div class="card-value">4.2x</div>
-                <div class="card-sub">Campaigns auto-adjusted</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">Est. Revenue (Today)</div>
-                <div class="card-value">$1,240</div>
-                <div class="card-sub text-cyan">Processing payments...</div>
-            </div>
+        <div class="field">
+          <label for="emailInput">MSU Student Email</label>
+          <input class="input" type="email" id="emailInput" value="@students.msu.ac.zw" placeholder="name@students.msu.ac.zw" autocomplete="off" />
         </div>
 
-        <div class="split-view">
-            
-            <div class="card" style="position: relative;">
-                <div class="card-header">Network Traffic (Spudy Backbone)</div>
-                <div style="display: flex; align-items: flex-end; height: 200px; gap: 5px; margin-top: 20px;">
-                    <div style="width: 10%; height: 40%; background: var(--spudy-purple); opacity: 0.5;"></div>
-                    <div style="width: 10%; height: 60%; background: var(--spudy-purple); opacity: 0.6;"></div>
-                    <div style="width: 10%; height: 45%; background: var(--spudy-purple); opacity: 0.5;"></div>
-                    <div style="width: 10%; height: 80%; background: var(--spudy-purple); opacity: 0.8;"></div>
-                    <div style="width: 10%; height: 70%; background: var(--spudy-purple); opacity: 0.7;"></div>
-                    <div style="width: 10%; height: 90%; background: var(--spudy-purple); opacity: 0.9;"></div>
-                    <div style="width: 10%; height: 50%; background: var(--spudy-purple); opacity: 0.5;"></div>
-                    <div style="width: 10%; height: 65%; background: var(--spudy-purple); opacity: 0.6;"></div>
-                    <div style="width: 10%; height: 100%; background: var(--spudy-cyan); box-shadow: 0 0 10px var(--spudy-cyan);"></div> <div style="width: 10%; height: 20%; background: #333;"></div>
-                </div>
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.1); font-size: 3rem; font-weight: bold;">LIVE TRAFFIC</div>
-            </div>
+        <button class="btn btn-primary" type="button" onclick="handleLogin()">
+          Verify & Enter <span aria-hidden="true">→</span>
+        </button>
 
-            <div class="terminal-window">
-                <div style="border-bottom: 1px solid #333; margin-bottom: 10px; padding-bottom: 5px;">SPUDY_SERVER_LOGS.txt</div>
-                <div class="terminal-line"><span class="log-time">10:42:01</span> [INFO] Spudy AI: Analyzing traffic patterns...</div>
-                <div class="terminal-line"><span class="log-time">10:42:05</span> [SUCCESS] Web Node 3 rebooted successfully.</div>
-                <div class="terminal-line"><span class="log-time">10:42:12</span> <span class="log-warn">[WARN] High latency detected in Sector 7.</span></div>
-                <div class="terminal-line"><span class="log-time">10:42:13</span> [ACTION] Spudy AI rerouting packets...</div>
-                <div class="terminal-line"><span class="log-time">10:42:15</span> [SUCCESS] Latency normalized to 24ms.</div>
-                <div class="terminal-line"><span class="log-time">10:42:40</span> [INFO] AdCenter: New budget allocated for "Client X".</div>
-                <div class="terminal-line"><span class="log-time">10:43:01</span> <span class="text-purple">_CURSOR_BLINKING...</span></div>
-            </div>
-
-        </div>
-
+        <div class="helper">This is a front-end demo. Real verification would happen on a server.</div>
+        <div id="errorMsg" class="error-msg" role="alert">Invalid credentials.</div>
+      </div>
     </div>
+  </section>
+
+  <!-- APP -->
+  <section id="appScreen" class="screen" aria-label="App screen">
+    <div class="app-shell">
+      <div class="panel">
+        <div class="panelHead">
+          <h3>Discover</h3>
+          <div class="statusPill" id="countPill">0 / 0</div>
+        </div>
+        <div class="panelBody">
+          <div class="card-stack" id="cardContainer"></div>
+        </div>
+      </div>
+
+      <aside class="mini">
+        <div class="miniCard">
+          <h4>How it works</h4>
+          <p>Tap <b>Request Reveal</b>. If the other person accepts, the photo clears and you can chat.</p>
+          <div class="note">Safety: Don’t share passwords, banking info, or private addresses.</div>
+        </div>
+
+        <div class="miniCard">
+          <h4>Community rules</h4>
+          <p>Keep it respectful. Harassment, threats, and explicit content are not allowed.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CHAT MODAL -->
+  <div id="chatOverlay" class="chat-overlay" role="dialog" aria-modal="true" aria-label="Match dialog">
+    <div class="chat-box">
+      <div class="chat-top">
+        <h3>It’s a Match 🐘</h3>
+        <button class="xbtn" type="button" onclick="closeChat()" aria-label="Close">×</button>
+      </div>
+      <div class="chat-body">
+        You both agreed to reveal. In a real app, this is where messaging would open.
+      </div>
+      <div class="chat-actions">
+        <button class="btn btn-primary" type="button" onclick="closeChat()">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mock Data: Profiles available on campus
+    const profiles = [
+      {
+        id: 1,
+        name: "Future Lawyer",
+        level: "Level 2.1",
+        faculty: "Law School",
+        campus: "Gweru Main Campus",
+        bio: "Spending too much time in the Great Hall. Looking for someone to study with.",
+        interests: ["Moot Court", "Coffee", "Politics"],
+        img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 2,
+        name: "Sci-Tech Guy",
+        level: "Level 4.1",
+        faculty: "Computer Science",
+        campus: "Zvishavane Campus",
+        bio: "Coding all night, need a reason to go outside. I know the best food spots.",
+        interests: ["Gaming", "Robotics", "Afrobeats"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 3,
+        name: "Arts & Culture",
+        level: "Level 1.2",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "Love poetry nights and weekend trips. Let's meet at the student center.",
+        interests: ["Poetry", "Travel", "Photography"],
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      },
+
+      /* +20 PROFILES */
+      {
+        id: 4,
+        name: "Accounting Queen",
+        level: "Level 3.1",
+        faculty: "Commerce",
+        campus: "Gweru Main Campus",
+        bio: "If I’m not balancing books, I’m balancing vibes. Let’s grab a drink after lectures.",
+        interests: ["Accounting", "Soft Life", "Gospel"],
+        img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 5,
+        name: "Quiet Medic",
+        level: "Level 2.2",
+        faculty: "Health Sciences",
+        campus: "Gweru Main Campus",
+        bio: "Clinical days are long, but I still make time for meaningful conversations.",
+        interests: ["Fitness", "Reading", "Healthy Meals"],
+        img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 6,
+        name: "Engineering Mind",
+        level: "Level 4.2",
+        faculty: "Engineering",
+        campus: "Zvishavane Campus",
+        bio: "I build solutions. Looking for someone who’s patient, funny, and real.",
+        interests: ["Design", "Football", "Podcasts"],
+        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 7,
+        name: "Future Teacher",
+        level: "Level 3.2",
+        faculty: "Education",
+        campus: "Gweru Main Campus",
+        bio: "I’m big on kindness and good energy. Let’s learn each other slowly.",
+        interests: ["Teaching", "Kids", "Nature Walks"],
+        img: "https://images.unsplash.com/photo-1544005316-04ce686f9fef?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 8,
+        name: "Campus DJ",
+        level: "Level 2.1",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "I mix amapiano, afrobeats, and good moments. Say hi if you love music.",
+        interests: ["DJing", "Amapiano", "Night Vibes"],
+        img: "https://images.unsplash.com/photo-1524503033411-f6e95e9c8edc?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 9,
+        name: "Business Strategist",
+        level: "Level 4.1",
+        faculty: "Business Management",
+        campus: "Gweru Main Campus",
+        bio: "Ambition is attractive. I like dates that feel like plans for the future.",
+        interests: ["Entrepreneurship", "Networking", "Coffee"],
+        img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 10,
+        name: "Library Lover",
+        level: "Level 1.1",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "I’m always in the library but I’m not boring — just focused. Surprise me.",
+        interests: ["Books", "Study Dates", "Poetry"],
+        img: "https://images.unsplash.com/photo-1544005314-599b1f2c0090?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 11,
+        name: "Sporty Gentleman",
+        level: "Level 3.1",
+        faculty: "Sports Science",
+        campus: "Gweru Main Campus",
+        bio: "Gym, class, repeat. Looking for someone who supports growth and laughs a lot.",
+        interests: ["Gym", "Athletics", "Motivation"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 12,
+        name: "Nursing Sweetheart",
+        level: "Level 2.1",
+        faculty: "Health Sciences",
+        campus: "Gweru Main Campus",
+        bio: "I’m caring by nature. If you’re genuine, we’ll get along easily.",
+        interests: ["Helping People", "R&B", "Cooking"],
+        img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 13,
+        name: "Tech Girl",
+        level: "Level 3.1",
+        faculty: "Computer Science",
+        campus: "Zvishavane Campus",
+        bio: "I love clean code and clean love. If you’re intentional, let’s talk.",
+        interests: ["UI/UX", "Startups", "Afrobeats"],
+        img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 14,
+        name: "Quiet Economist",
+        level: "Level 4.2",
+        faculty: "Economics",
+        campus: "Gweru Main Campus",
+        bio: "I’m calm, observant, and loyal. I like simple dates and deep talks.",
+        interests: ["Economics", "Chess", "Documentaries"],
+        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 15,
+        name: "Fashion Forward",
+        level: "Level 2.2",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "Style is my language. If you dress well and treat people well, we’ll vibe.",
+        interests: ["Fashion", "Photos", "Soft Life"],
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 16,
+        name: "Campus Comedian",
+        level: "Level 1.2",
+        faculty: "Media & Communication",
+        campus: "Gweru Main Campus",
+        bio: "I’ll make you laugh even on deadline week. Don’t take life too seriously.",
+        interests: ["Comedy", "Content", "Movies"],
+        img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 17,
+        name: "Future Lawyer (Alt)",
+        level: "Level 4.1",
+        faculty: "Law School",
+        campus: "Gweru Main Campus",
+        bio: "I argue for a living, but I’m soft in real life. Let’s do coffee and peace.",
+        interests: ["Law", "Coffee", "Debate"],
+        img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 18,
+        name: "Shy Photographer",
+        level: "Level 3.2",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "I capture moments, not attention. If you’re calm and kind, say hello.",
+        interests: ["Photography", "Travel", "Sunsets"],
+        img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 19,
+        name: "Research Babe",
+        level: "Level 4.2",
+        faculty: "Science",
+        campus: "Zvishavane Campus",
+        bio: "I’m always doing a project. I like people who encourage and don’t disturb peace.",
+        interests: ["Research", "Music", "Tea"],
+        img: "https://images.unsplash.com/photo-1544005316-04ce686f9fef?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 20,
+        name: "Campus Chef",
+        level: "Level 2.1",
+        faculty: "Hospitality",
+        campus: "Gweru Main Campus",
+        bio: "I can cook. You just need to be honest and hungry 😄",
+        interests: ["Cooking", "Food Spots", "Laughs"],
+        img: "https://images.unsplash.com/photo-1524503033411-f6e95e9c8edc?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 21,
+        name: "Soft Spoken Designer",
+        level: "Level 3.1",
+        faculty: "Creative Arts",
+        campus: "Gweru Main Campus",
+        bio: "I design posters and quiet love stories. If you’re respectful, we’ll connect.",
+        interests: ["Design", "Art", "Chill Music"],
+        img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 22,
+        name: "Transport & Logistics",
+        level: "Level 4.1",
+        faculty: "Commerce",
+        campus: "Zvishavane Campus",
+        bio: "I like plans, time, and consistency. Let’s start with a simple conversation.",
+        interests: ["Road Trips", "Business", "Afrobeats"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: 23,
+        name: "Drama & Stage",
+        level: "Level 2.2",
+        faculty: "Arts",
+        campus: "Gweru Main Campus",
+        bio: "Theatre kid with a soft heart. If you’re fun, let’s link after rehearsal.",
+        interests: ["Theatre", "Dance", "Movies"],
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
+
+    let currentProfileIndex = 0;
+    const el = (id) => document.getElementById(id);
+
+    function setError(message) {
+      const box = el("errorMsg");
+      box.textContent = message;
+      box.style.display = "block";
+      setTimeout(() => (box.style.display = "none"), 3500);
+    }
+
+    function validReg(reg) {
+      return /^[Rr]\d{4,}[A-Za-z]$/.test(reg.trim());
+    }
+
+    function validMsuEmail(email) {
+      const v = email.trim().toLowerCase();
+      return /^[^\s@]+@students\.msu\.ac\.zw$/.test(v);
+    }
+
+    function handleLogin() {
+      const email = el("emailInput").value;
+      const reg = el("regNumber").value;
+
+      if (!validReg(reg)) return setError("Invalid Reg Number format (e.g. R123456X).");
+      if (!validMsuEmail(email)) return setError("Use a valid MSU email (name@students.msu.ac.zw).");
+
+      el("loginScreen").classList.remove("active");
+      el("appScreen").classList.add("active");
+      el("logoutBtn").style.display = "inline-flex";
+
+      currentProfileIndex = 0;
+      loadProfile();
+      updateCount();
+    }
+
+    function logout() {
+      location.reload();
+    }
+
+    function updateCount() {
+      el("countPill").textContent = `${Math.min(currentProfileIndex + 1, profiles.length)} / ${profiles.length}`;
+    }
+
+    function loadProfile() {
+      const container = el("cardContainer");
+
+      if (currentProfileIndex >= profiles.length) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 40px 10px;">
+            <h3 style="margin:0; color: var(--msu-blue);">No more profiles</h3>
+            <p style="margin:10px 0 0; color: var(--muted);">Check back later for more students.</p>
+            <button class="btn btn-primary" style="margin-top:18px; max-width: 280px;" onclick="location.reload()">Refresh</button>
+          </div>
+        `;
+        el("countPill").textContent = `${profiles.length} / ${profiles.length}`;
+        return;
+      }
+
+      const p = profiles[currentProfileIndex];
+
+      container.innerHTML = `
+        <article class="profile-card" aria-label="Student profile card">
+          <div class="image-container">
+            <div class="blind-badge" id="blindBadge"><i></i> Hidden Profile</div>
+            <img src="${p.img}" alt="Student profile photo" class="profile-img" id="currentImg" loading="lazy">
+          </div>
+
+          <div class="card-details">
+            <div class="topline">
+              <h3 class="name">${p.name}</h3>
+              <div class="level">${p.level}</div>
+            </div>
+
+            <p class="sub-info">${p.faculty} • ${p.campus}</p>
+            <p class="bio">“${p.bio}”</p>
+
+            <div class="tags" aria-label="Interests">
+              ${p.interests.map(i => `<span class="tag">#${escapeHtml(i)}</span>`).join("")}
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-skip" type="button" onclick="nextProfile()" aria-label="Skip">✕</button>
+              <button class="btn btn-reveal" type="button" onclick="requestReveal()">Request Reveal</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function nextProfile() {
+      currentProfileIndex++;
+      updateCount();
+      loadProfile();
+    }
+
+    function requestReveal() {
+      const img = el("currentImg");
+      const badge = el("blindBadge");
+
+      const ok = confirm("Send a Reveal Request?\nIf they accept, the photo will unblur.");
+      if (!ok) return;
+
+      img.classList.add("revealed");
+      if (badge) badge.style.display = "none";
+
+      setTimeout(() => {
+        el("chatOverlay").style.display = "flex";
+      }, 650);
+    }
+
+    function closeChat() {
+      el("chatOverlay").style.display = "none";
+      nextProfile();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
 </body>
 </html>
