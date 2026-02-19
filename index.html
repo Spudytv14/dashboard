@@ -37,6 +37,37 @@
       --glass2: rgba(255,255,255,.88);
     }
 
+    .dark-mode{
+      --bg0:#0b0f19;
+      --card:#111827;
+      --text:#f9fafb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.10);
+
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --shadow-soft: 0 10px 25px rgba(0,0,0,.35);
+
+      --glass: rgba(17,24,39,.75);
+      --glass2: rgba(17,24,39,.90);
+    }
+    .dark-mode body{
+      background:
+        radial-gradient(900px 420px at 18% -10%, rgba(0,51,102,.25), transparent 55%),
+        radial-gradient(700px 420px at 85% 0%, rgba(255,215,0,.12), transparent 55%),
+        linear-gradient(180deg, #0b0f19, #020408 70%, #020408);
+    }
+    .dark-mode .input,
+    .dark-mode .select,
+    .dark-mode .savedItem,
+    .dark-mode .chatMsgArea{
+      background: rgba(255,255,255,.05);
+      color: #fff;
+      border-color: rgba(255,255,255,.12);
+    }
+    .dark-mode .input::placeholder{color: rgba(255,255,255,.45)}
+    .dark-mode .chatInput{background: rgba(0,0,0,.25); color:#fff; border-color: rgba(255,255,255,.12);}
+    .dark-mode .pillBtn{background: rgba(255,255,255,.08); color:#fff; border-color: rgba(255,255,255,.15);}
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -1140,6 +1171,21 @@
               <option value="Science">Science</option>
               <option value="Sports Science">Sports Science</option>
               <option value="Creative Arts">Creative Arts</option>
+              <option value="Social Sciences">Social Sciences</option>
+            </select>
+
+            <select id="levelFilter" class="select" aria-label="Level filter">
+              <option value="all">All levels</option>
+              <option value="Level 1.1">Level 1.1</option>
+              <option value="Level 1.2">Level 1.2</option>
+              <option value="Level 2.1">Level 2.1</option>
+              <option value="Level 2.2">Level 2.2</option>
+              <option value="Level 3.1">Level 3.1</option>
+              <option value="Level 3.2">Level 3.2</option>
+              <option value="Level 4.1">Level 4.1</option>
+              <option value="Level 4.2">Level 4.2</option>
+              <option value="Level 5.1">Level 5.1</option>
+              <option value="Level 5.2">Level 5.2</option>
             </select>
           </div>
 
@@ -1216,6 +1262,13 @@
           <div>
             <label style="display:block; margin-bottom:8px;">Reveal confirmation</label>
             <button id="toggleConfirmBtn" class="pillBtn" type="button">On</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <div>
+            <label style="display:block; margin-bottom:8px;">Theme</label>
+            <button id="toggleDarkBtn" class="pillBtn" type="button">Light</button>
           </div>
 
           <div class="hr"></div>
@@ -1365,6 +1418,107 @@
         bio: "Theatre kid with a soft heart. If you’re fun, let’s link after rehearsal.",
         interests: ["Theatre", "Dance", "Movies"],
         img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      },
+      // --- PREMIUM EXTRA PROFILES ---
+      { id: 24, name: "Debate Captain", level: "Level 3.1", faculty: "Law School", campus: "Gweru Main Campus",
+        bio: "I like people who can hold a conversation. Let’s debate the best coffee spot on campus.",
+        interests: ["Debate", "Politics", "Coffee"],
+        img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 25, name: "Soccer Star", level: "Level 2.1", faculty: "Sports Science", campus: "Gweru Main Campus",
+        bio: "On the field or in the gym. Looking for a cheerleader and a partner.",
+        interests: ["Soccer", "Fitness", "Music"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 26, name: "Poet Soul", level: "Level 4.2", faculty: "Creative Arts", campus: "Zvishavane Campus",
+        bio: "Words are my escape. If you appreciate deep thoughts and silence, we will vibe.",
+        interests: ["Poetry", "Writing", "Jazz"],
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 27, name: "Finance Bro", level: "Level 3.2", faculty: "Commerce", campus: "Gweru Main Campus",
+        bio: "Analyzing markets and maximizing fun. Work hard, play hard.",
+        interests: ["Stocks", "Gym", "Travel"],
+        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 28, name: "Med Student", level: "Level 5.1", faculty: "Health Sciences", campus: "Gweru Main Campus",
+        bio: "Future doctor. I have little time but a big heart. Be my stress reliever.",
+        interests: ["Medicine", "Study", "Netflix"],
+        img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 29, name: "Code Wizard", level: "Level 2.2", faculty: "Computer Science", campus: "Zvishavane Campus",
+        bio: "Turning coffee into code. Seeking someone to debug my life.",
+        interests: ["Coding", "Hackathons", "Gaming"],
+        img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 30, name: "Eco Warrior", level: "Level 1.2", faculty: "Science", campus: "Gweru Main Campus",
+        bio: "Saving the planet one step at a time. Love nature walks and vegan food.",
+        interests: ["Environment", "Hiking", "Animals"],
+        img: "https://images.unsplash.com/photo-1544005316-04ce686f9fef?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 31, name: "History Buff", level: "Level 3.1", faculty: "Education", campus: "Gweru Main Campus",
+        bio: "Learning from the past to build a future. Let’s visit a museum.",
+        interests: ["History", "Reading", "Museums"],
+        img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 32, name: "Fashionista", level: "Level 2.1", faculty: "Arts", campus: "Gweru Main Campus",
+        bio: "Life is a runway. Looking for a stylish partner in crime.",
+        interests: ["Fashion", "Shopping", "Instagram"],
+        img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 33, name: "Engineer", level: "Level 4.1", faculty: "Engineering", campus: "Zvishavane Campus",
+        bio: "Building bridges and relationships. Practical and grounded.",
+        interests: ["Engineering", "DIY", "Cars"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 34, name: "Psych Major", level: "Level 3.2", faculty: "Social Sciences", campus: "Gweru Main Campus",
+        bio: "I can read your mind (kidding). I love deep conversations and understanding people.",
+        interests: ["Psychology", "People", "Yoga"],
+        img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 35, name: "Musician", level: "Level 1.1", faculty: "Creative Arts", campus: "Gweru Main Campus",
+        bio: "I play guitar and sing. Let me serenade you.",
+        interests: ["Music", "Guitar", "Concerts"],
+        img: "https://images.unsplash.com/photo-1524503033411-f6e95e9c8edc?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 36, name: "Entrepreneur", level: "Level 4.2", faculty: "Business Management", campus: "Gweru Main Campus",
+        bio: "Building my empire. Need a queen by my side.",
+        interests: ["Business", "Startups", "Luxury"],
+        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 37, name: "Journalist", level: "Level 2.2", faculty: "Media & Communication", campus: "Gweru Main Campus",
+        bio: "Always chasing the story. Curious and adventurous.",
+        interests: ["Writing", "News", "Travel"],
+        img: "https://images.unsplash.com/photo-1544005314-599b1f2c0090?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 38, name: "Chef in Training", level: "Level 3.1", faculty: "Hospitality", campus: "Gweru Main Campus",
+        bio: "The way to the heart is through the stomach. Let me cook for you.",
+        interests: ["Cooking", "Food", "Wine"],
+        img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 39, name: "Gamer", level: "Level 1.2", faculty: "Computer Science", campus: "Zvishavane Campus",
+        bio: "Leveling up in life and games. Player 2 wanted.",
+        interests: ["Gaming", "Anime", "Discord"],
+        img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 40, name: "Nature Lover", level: "Level 2.1", faculty: "Science", campus: "Gweru Main Campus",
+        bio: "Botany student. I love plants and sunshine.",
+        interests: ["Plants", "Gardening", "Outdoors"],
+        img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 41, name: "Architect", level: "Level 5.1", faculty: "Engineering", campus: "Gweru Main Campus",
+        bio: "Designing dreams. Appreciate structure and beauty.",
+        interests: ["Architecture", "Design", "Art"],
+        img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 42, name: "Dancer", level: "Level 2.2", faculty: "Arts", campus: "Gweru Main Campus",
+        bio: "Expressing myself through movement. Let’s dance the night away.",
+        interests: ["Dance", "Music", "Fitness"],
+        img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
+      },
+      { id: 43, name: "Film Student", level: "Level 3.2", faculty: "Media & Communication", campus: "Gweru Main Campus",
+        bio: "Life is a movie. Let’s make it a romance.",
+        interests: ["Movies", "Filming", "Editing"],
+        img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
       }
     ];
 
@@ -1389,8 +1543,8 @@
       current: null,
       saved: new Set(),
       chats: {}, // { [profileId]: [{me:boolean, text:string, ts:number}] }
-      filters: { q:"", campus:"all", faculty:"all" },
-      settings: { confirmReveal: true },
+      filters: { q:"", campus:"all", faculty:"all", level:"all" },
+      settings: { confirmReveal: true, darkMode: false },
       reducedMotion: false,
       dragging: false,
       dragX: 0,
@@ -1480,12 +1634,21 @@
 
     function initSettings(){
       const savedSettings = loadLS(LS.settings, null);
-      if (savedSettings && typeof savedSettings.confirmReveal === "boolean") {
-        state.settings.confirmReveal = savedSettings.confirmReveal;
+      if (savedSettings) {
+        if (typeof savedSettings.confirmReveal === "boolean") state.settings.confirmReveal = savedSettings.confirmReveal;
+        if (typeof savedSettings.darkMode === "boolean") state.settings.darkMode = savedSettings.darkMode;
       }
       const rm = loadLS(LS.motion, false);
       setSwitch(reducedMotionSwitch, rm);
       state.reducedMotion = !!rm;
+      
+      applyDarkMode(state.settings.darkMode);
+    }
+    
+    function applyDarkMode(on){
+      document.body.classList.toggle("dark-mode", !!on);
+      const btn = el("toggleDarkBtn");
+      if(btn) btn.textContent = on ? "Dark" : "Light";
     }
 
     function toggleSwitch(node, cb){
@@ -1574,11 +1737,13 @@
     const searchInput = el("searchInput");
     const campusFilter = el("campusFilter");
     const facultyFilter = el("facultyFilter");
+    const levelFilter = el("levelFilter");
 
     function applyFiltersToControls(){
       searchInput.value = state.filters.q || "";
       campusFilter.value = state.filters.campus || "all";
       facultyFilter.value = state.filters.faculty || "all";
+      levelFilter.value = state.filters.level || "all";
     }
 
     function matches(profile, q){
@@ -1595,11 +1760,13 @@
       const q = (state.filters.q || "").trim();
       const campus = state.filters.campus || "all";
       const faculty = state.filters.faculty || "all";
+      const level = state.filters.level || "all";
 
       let next = state.all.filter(p => matches(p, q));
 
       if (campus !== "all") next = next.filter(p => p.campus === campus);
       if (faculty !== "all") next = next.filter(p => p.faculty === faculty);
+      if (level !== "all") next = next.filter(p => p.level === level);
 
       state.list = next;
 
@@ -1640,9 +1807,14 @@
       persistFilters();
       rebuildListAndRender(true);
     });
+    levelFilter.addEventListener("change", ()=>{
+      state.filters.level = levelFilter.value;
+      persistFilters();
+      rebuildListAndRender(true);
+    });
 
     el("clearFiltersBtn").addEventListener("click", ()=>{
-      state.filters = { q:"", campus:"all", faculty:"all" };
+      state.filters = { q:"", campus:"all", faculty:"all", level:"all" };
       persistFilters();
       applyFiltersToControls();
       rebuildListAndRender(true);
@@ -1751,8 +1923,10 @@
             </div>
 
             <div class="actions">
+              <button class="btn btn-skip" type="button" id="undoBtn" aria-label="Undo" style="font-size:1.1rem; width:48px;" title="Undo last skip">↺</button>
               <button class="btn btn-skip" type="button" id="skipBtn" aria-label="Skip">✕</button>
               <button class="btn btn-save" type="button" id="saveBtn" aria-label="Save">${isSaved ? "★" : "☆"}</button>
+              <button class="btn btn-save" type="button" id="superBtn" aria-label="Super Request" style="color:#007bff; border-color:#007bff; background:rgba(0,123,255,.08);" title="Super Request">★</button>
               <button class="btn btn-reveal" type="button" id="revealBtn">${revealState ? "Open Chat" : "Request Reveal"}</button>
             </div>
 
@@ -1765,8 +1939,10 @@
       `;
 
       // Bind actions
+      el("undoBtn").addEventListener("click", undoSkip);
       el("skipBtn").addEventListener("click", () => nextProfile(true));
       el("saveBtn").addEventListener("click", toggleSaveCurrent);
+      el("superBtn").addEventListener("click", superRequest);
       el("revealBtn").addEventListener("click", requestRevealOrChat);
 
       // Swipe gestures
@@ -1801,6 +1977,39 @@
       updateCount();
       loadProfile();
       if (userInitiated) toast("info","Skipped","Moved to next profile.", 1200);
+    }
+
+    function undoSkip(){
+      if (state.idx > 0) {
+        state.idx--;
+        updateCount();
+        loadProfile();
+        toast("info", "Undo", "Back to previous profile.", 1200);
+      } else {
+        toast("warn", "Start of list", "Can't go back further.", 1500);
+      }
+    }
+
+    function superRequest(){
+      const p = state.current;
+      if (!p) return;
+      
+      // Auto save
+      if (!state.saved.has(p.id)){
+        state.saved.add(p.id);
+        persistSaved();
+        renderSaved();
+      }
+      
+      // Trigger reveal request logic (force confirm off effectively)
+      const prevConfirm = state.settings.confirmReveal;
+      state.settings.confirmReveal = false; // Bypass confirm for super like
+      
+      requestRevealOrChat();
+      
+      state.settings.confirmReveal = prevConfirm; // Restore
+      
+      toast("ok", "Super Request Sent!", "Priority reveal request + Saved.", 2000);
     }
 
     function toggleSaveCurrent(){
@@ -2127,6 +2336,12 @@
       toast("info","Reveal confirmation", state.settings.confirmReveal ? "Enabled" : "Disabled", 1800);
     });
 
+    el("toggleDarkBtn").addEventListener("click", ()=>{
+      state.settings.darkMode = !state.settings.darkMode;
+      persistSettings();
+      applyDarkMode(state.settings.darkMode);
+    });
+
     el("resetDataBtn").addEventListener("click", ()=>{
       const ok = confirm("Reset local data?\nThis clears saved profiles, chats, filters, and remembered session on this device.");
       if (!ok) return;
@@ -2209,3 +2424,4 @@
 </body>
 </html>
 ```
+
