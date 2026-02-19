@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -27,6 +27,14 @@
       --radius: 18px;
 
       --focus: 0 0 0 4px rgba(255,215,0,.35);
+
+      --success:#067647;
+      --danger:#b30000;
+      --warn:#b54708;
+      --info:#175cd3;
+
+      --glass: rgba(255,255,255,.74);
+      --glass2: rgba(255,255,255,.88);
     }
 
     *{box-sizing:border-box}
@@ -44,10 +52,21 @@
       overflow:hidden;
     }
 
+    /* Accessibility helpers */
+    .sr-only{
+      position:absolute!important;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;border:0;
+    }
+
+    /* Top bar */
     header{
       position:sticky;
       top:0;
-      z-index:20;
+      z-index:30;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -63,6 +82,7 @@
       gap:10px;
       color:#fff;
       user-select:none;
+      min-width: 240px;
     }
     .mark{
       width:34px;height:34px;
@@ -73,11 +93,11 @@
         rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.14);
       box-shadow: 0 10px 25px rgba(0,0,0,.18);
-      font-weight:800;
+      font-weight:900;
       color: #0b2a52;
     }
     .logo{
-      font-weight:800;
+      font-weight:900;
       letter-spacing:.2px;
       font-size:1.05rem;
       line-height:1.1;
@@ -90,7 +110,32 @@
     }
     .brandText{display:flex;flex-direction:column}
 
-    .logout-btn{
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .chip{
+      display:none;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      font-weight:700;
+      font-size:.82rem;
+      white-space:nowrap;
+    }
+    .chipDot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--msu-gold);
+      box-shadow: 0 0 0 4px rgba(255,215,0,.18);
+    }
+
+    .iconBtn, .logout-btn{
       border:1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
       color:#fff;
@@ -98,13 +143,15 @@
       border-radius:12px;
       cursor:pointer;
       display:none;
-      font-weight:600;
+      font-weight:700;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
     }
-    .logout-btn:hover{background: rgba(255,255,255,.12)}
-    .logout-btn:active{transform: scale(.98)}
-    .logout-btn:focus-visible{outline:none; box-shadow: var(--focus)}
+    .iconBtn{width:44px; height:44px; display:grid; place-items:center; padding:0}
+    .iconBtn:hover,.logout-btn:hover{background: rgba(255,255,255,.12)}
+    .iconBtn:active,.logout-btn:active{transform: scale(.98)}
+    .iconBtn:focus-visible,.logout-btn:focus-visible{outline:none; box-shadow: var(--focus)}
 
+    /* Screens */
     .screen{
       display:none;
       height:100%;
@@ -114,9 +161,10 @@
     }
     .screen.active{display:flex}
 
+    /* Login */
     .login-wrap{
       width:100%;
-      max-width: 980px;
+      max-width: 1020px;
       margin:0 auto;
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -154,14 +202,14 @@
     }
     .hero h1{
       margin:0 0 10px;
-      font-size:1.8rem;
+      font-size:1.9rem;
       letter-spacing:.2px;
-      line-height:1.15;
+      line-height:1.12;
     }
     .hero p{
       margin:0;
       color:rgba(255,255,255,.78);
-      max-width: 44ch;
+      max-width: 48ch;
       font-size:.95rem;
       line-height:1.6;
     }
@@ -192,7 +240,7 @@
     }
 
     .panel{
-      background: rgba(255,255,255,.72);
+      background: var(--glass);
       backdrop-filter: blur(10px);
       border:1px solid rgba(16,24,40,.10);
       border-radius: var(--radius);
@@ -220,7 +268,7 @@
     }
 
     .field{display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
-    label{font-size:.85rem; color: var(--muted); font-weight:600;}
+    label{font-size:.85rem; color: var(--muted); font-weight:700;}
     .input{
       width:100%;
       padding:12px 12px;
@@ -229,14 +277,58 @@
       background: rgba(255,255,255,.95);
       color: var(--text);
       font-size:.98rem;
-      transition: box-shadow .15s ease, border-color .15s ease;
+      transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
     }
     .input::placeholder{color: rgba(102,112,133,.75)}
     .input:focus{
       outline:none;
       border-color: rgba(255,215,0,.65);
       box-shadow: var(--focus);
+      transform: translateY(-1px);
     }
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .toggle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:.85rem;
+      color: rgba(102,112,133,.92);
+      user-select:none;
+    }
+    .switch{
+      width:42px;height:26px;
+      border-radius:999px;
+      background: rgba(16,24,40,.10);
+      border:1px solid rgba(16,24,40,.12);
+      position:relative;
+      cursor:pointer;
+      flex:0 0 auto;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .switch::after{
+      content:"";
+      width:20px;height:20px;
+      border-radius:999px;
+      background:#fff;
+      position:absolute;
+      top:50%; left:3px;
+      transform: translateY(-50%);
+      box-shadow: 0 8px 18px rgba(16,24,40,.15);
+      transition: left .15s ease;
+    }
+    .switch.on{
+      background: rgba(255,215,0,.25);
+      border-color: rgba(255,215,0,.55);
+    }
+    .switch.on::after{left:19px}
 
     .btn{
       width:100%;
@@ -244,9 +336,9 @@
       border:none;
       border-radius: 12px;
       font-size: .98rem;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
-      transition: transform .12s ease, box-shadow .15s ease, filter .15s ease;
+      transition: transform .12s ease, box-shadow .15s ease, filter .15s ease, opacity .15s ease;
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -261,6 +353,7 @@
       box-shadow: 0 10px 24px rgba(0,51,102,.22);
     }
     .btn-primary:hover{filter: brightness(1.03)}
+    .btn:disabled{opacity:.55; cursor:not-allowed}
 
     .helper{
       margin-top:12px;
@@ -268,31 +361,137 @@
       font-size:.84rem;
       line-height:1.45;
     }
-    .error-msg{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius: 12px;
-      font-size:.88rem;
-      display:none;
-      background: rgba(179,0,0,.07);
-      border: 1px solid rgba(179,0,0,.18);
-      color: var(--msu-red);
-      font-weight:600;
-    }
 
-    /* APP */
+    .toastWrap{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 60;
+      display:grid;
+      gap:10px;
+      pointer-events:none;
+      width: min(360px, calc(100vw - 28px));
+    }
+    .toast{
+      pointer-events:auto;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(16,24,40,.10);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-soft);
+      transform: translateY(10px);
+      opacity:0;
+      animation: toastIn .22s ease forwards;
+    }
+    @keyframes toastIn{
+      to{transform: translateY(0); opacity:1}
+    }
+    .toast .ticon{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      background: rgba(16,24,40,.06);
+      border:1px solid rgba(16,24,40,.08);
+      flex:0 0 auto;
+      font-weight:900;
+    }
+    .toast .tmain{flex:1}
+    .toast .ttitle{margin:0; font-weight:900; font-size:.92rem}
+    .toast .tmsg{margin:2px 0 0; color: rgba(102,112,133,.95); font-size:.86rem; line-height:1.4}
+    .toast .tclose{
+      width:34px;height:34px;border-radius:12px;
+      border:1px solid rgba(16,24,40,.10);
+      background: rgba(16,24,40,.04);
+      cursor:pointer;
+      font-weight:900;
+      color: rgba(16,24,40,.70);
+    }
+    .toast .tclose:focus-visible{outline:none; box-shadow: var(--focus)}
+
+    /* APP shell */
     .app-shell{
       width:100%;
-      max-width: 980px;
+      max-width: 1020px;
       margin: 0 auto;
       display:grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 360px;
       gap:16px;
       align-items:start;
     }
-    @media (max-width: 980px){
+    @media (max-width: 1020px){
       .app-shell{grid-template-columns:1fr}
     }
+
+    /* Top filters bar */
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+    }
+    .toolbarLeft{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      min-width: 280px;
+    }
+    .search{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background: rgba(255,255,255,.9);
+      border:1px solid rgba(16,24,40,.12);
+      border-radius: 14px;
+      padding:10px 12px;
+      min-width: min(420px, 100%);
+      flex: 1 1 320px;
+    }
+    .search input{
+      border:none;
+      outline:none;
+      background: transparent;
+      width:100%;
+      font-size:.95rem;
+      color: var(--text);
+    }
+    .search kbd{
+      font-size:.75rem;
+      font-weight:900;
+      color: rgba(102,112,133,.92);
+      border:1px solid rgba(16,24,40,.12);
+      background: rgba(16,24,40,.04);
+      padding:3px 6px;
+      border-radius: 8px;
+      white-space:nowrap;
+    }
+    .select{
+      border:1px solid rgba(16,24,40,.12);
+      background: rgba(255,255,255,.9);
+      border-radius: 14px;
+      padding:10px 12px;
+      font-weight:800;
+      color: rgba(16,24,40,.86);
+      cursor:pointer;
+    }
+    .select:focus-visible{outline:none; box-shadow: var(--focus)}
+    .toolbarRight{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    /* Panels */
     .panelHead{
       padding:14px 16px;
       border-bottom:1px solid var(--line);
@@ -306,33 +505,36 @@
       font-size:1rem;
       color: var(--msu-blue);
       letter-spacing:.2px;
+      font-weight:900;
     }
     .statusPill{
       font-size:.78rem;
-      font-weight:700;
+      font-weight:900;
       padding:6px 10px;
       border-radius:999px;
       background: rgba(255,215,0,.16);
       border:1px solid rgba(255,215,0,.28);
       color: #4a3b00;
+      white-space:nowrap;
     }
     .panelBody{padding:16px}
 
+    /* Card stack */
     .card-stack{
       position:relative;
-      height: 560px;
+      height: 590px;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:18px;
     }
     @media (max-width: 520px){
-      .card-stack{height: 540px; padding:12px}
+      .card-stack{height: 570px; padding:12px}
     }
 
     .profile-card{
       width:100%;
-      max-width: 520px;
+      max-width: 560px;
       height:100%;
       background: var(--card);
       border-radius: 22px;
@@ -341,7 +543,32 @@
       border: 1px solid rgba(16,24,40,.08);
       display:flex;
       flex-direction:column;
+      position:relative;
+      transform: translateZ(0);
     }
+
+    /* Swipe hint layer */
+    .swipeHint{
+      position:absolute; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+      z-index:5;
+    }
+    .swipeHint.show{display:flex}
+    .hintBadge{
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      letter-spacing:.2px;
+      background: rgba(255,255,255,.88);
+      border:1px solid rgba(16,24,40,.10);
+      box-shadow: var(--shadow-soft);
+      color: rgba(16,24,40,.88);
+    }
+    .hintBadge.good{color: var(--success); border-color: rgba(6,118,71,.25); background: rgba(6,118,71,.08)}
+    .hintBadge.bad{color: var(--danger); border-color: rgba(179,0,0,.22); background: rgba(179,0,0,.06)}
 
     .image-container{
       flex: 1.35;
@@ -354,6 +581,7 @@
       position:absolute; inset:0;
       background: linear-gradient(180deg, rgba(16,24,40,.00) 55%, rgba(16,24,40,.35));
       pointer-events:none;
+      z-index:1;
     }
 
     .profile-img{
@@ -373,7 +601,7 @@
       position:absolute;
       left: 14px;
       top: 14px;
-      z-index:2;
+      z-index:3;
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -382,7 +610,7 @@
       background: rgba(0,51,102,.70);
       border:1px solid rgba(255,255,255,.14);
       color:#fff;
-      font-weight:800;
+      font-weight:900;
       font-size:.82rem;
       backdrop-filter: blur(8px);
       box-shadow: 0 10px 22px rgba(0,0,0,.18);
@@ -410,14 +638,15 @@
     }
     .name{
       margin:0;
-      font-size:1.3rem;
+      font-size:1.35rem;
       color: var(--msu-blue);
       letter-spacing:.1px;
       line-height:1.2;
+      font-weight:950;
     }
     .level{
       font-size:.82rem;
-      font-weight:800;
+      font-weight:950;
       color: rgba(16,24,40,.72);
       background: rgba(16,24,40,.06);
       border:1px solid rgba(16,24,40,.08);
@@ -439,6 +668,23 @@
       line-height:1.55;
     }
 
+    .stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:2px;
+    }
+    .stat{
+      font-size:.82rem;
+      font-weight:900;
+      color: rgba(16,24,40,.76);
+      background: rgba(16,24,40,.04);
+      border:1px solid rgba(16,24,40,.08);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .stat b{color: rgba(0,51,102,.92)}
+
     .tags{
       display:flex;
       flex-wrap:wrap;
@@ -447,7 +693,7 @@
     }
     .tag{
       font-size:.82rem;
-      font-weight:700;
+      font-weight:900;
       color: rgba(0,51,102,.92);
       background: rgba(0,51,102,.08);
       border: 1px solid rgba(0,51,102,.10);
@@ -459,6 +705,7 @@
       display:flex;
       gap:10px;
       margin-top:auto;
+      align-items:center;
     }
     .btn-skip{
       width:56px;
@@ -478,12 +725,30 @@
     }
     .btn-reveal:hover{filter: brightness(1.02)}
 
+    .btn-save{
+      width:56px;
+      background: rgba(23,92,211,.08);
+      color: rgba(23,92,211,.95);
+      border:1px solid rgba(23,92,211,.18);
+      box-shadow:none;
+      font-weight:950;
+    }
+
+    .fineprint{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed rgba(16,24,40,.14);
+      color: rgba(102,112,133,.92);
+      font-size:.82rem;
+      line-height:1.45;
+    }
+
     /* Sidebar */
     .mini{display:grid; gap:12px;}
     .miniCard{
       padding:14px;
       border-radius: var(--radius);
-      background: rgba(255,255,255,.72);
+      background: var(--glass);
       backdrop-filter: blur(10px);
       border:1px solid rgba(16,24,40,.10);
       box-shadow: var(--shadow-soft);
@@ -492,6 +757,7 @@
       margin:0 0 8px;
       font-size:.95rem;
       color: var(--msu-blue);
+      font-weight:950;
     }
     .miniCard p{
       margin:0;
@@ -507,6 +773,58 @@
       border-top:1px dashed rgba(16,24,40,.14);
     }
 
+    .smallList{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .savedItem{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(16,24,40,.10);
+      background: rgba(255,255,255,.85);
+    }
+    .avatar{
+      width:40px;height:40px;border-radius:14px;
+      background: rgba(16,24,40,.06);
+      border:1px solid rgba(16,24,40,.10);
+      display:grid; place-items:center;
+      font-weight:950;
+      color: rgba(0,51,102,.92);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .savedMeta{flex:1; min-width: 0}
+    .savedName{
+      margin:0;
+      font-weight:950;
+      font-size:.92rem;
+      color: rgba(16,24,40,.88);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .savedSub{
+      margin:2px 0 0;
+      font-size:.82rem;
+      color: rgba(102,112,133,.95);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .miniBtn{
+      width:36px;height:36px;border-radius:12px;
+      border:1px solid rgba(16,24,40,.10);
+      background: rgba(16,24,40,.04);
+      cursor:pointer;
+      font-weight:950;
+      color: rgba(16,24,40,.70);
+    }
+    .miniBtn:focus-visible{outline:none; box-shadow: var(--focus)}
+
     /* Chat modal */
     .chat-overlay{
       position:fixed; inset:0;
@@ -518,8 +836,8 @@
       z-index:50;
     }
     .chat-box{
-      width:min(420px, 100%);
-      background: rgba(255,255,255,.82);
+      width:min(520px, 100%);
+      background: rgba(255,255,255,.88);
       backdrop-filter: blur(12px);
       border-radius: var(--radius);
       border: 1px solid rgba(255,255,255,.25);
@@ -539,6 +857,7 @@
       color: var(--msu-blue);
       font-size:1.05rem;
       letter-spacing:.2px;
+      font-weight:950;
     }
     .xbtn{
       width:38px;height:38px;
@@ -546,18 +865,161 @@
       border:1px solid rgba(16,24,40,.10);
       background: rgba(16,24,40,.04);
       cursor:pointer;
-      font-weight:900;
+      font-weight:950;
       color: rgba(16,24,40,.70);
     }
     .xbtn:focus-visible{outline:none; box-shadow: var(--focus)}
-    .chat-body{
-      padding:16px;
-      text-align:left;
-      color: rgba(16,24,40,.80);
-      font-size:.92rem;
-      line-height:1.55;
+
+    .chat-body{padding:14px 16px 10px}
+    .chatSub{
+      margin:0;
+      color: rgba(102,112,133,.95);
+      font-size:.9rem;
+      line-height:1.45;
     }
-    .chat-actions{padding:16px}
+
+    .chatMsgArea{
+      margin-top:12px;
+      border:1px solid rgba(16,24,40,.10);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(255,255,255,.86);
+    }
+    .chatMsgs{
+      height: 210px;
+      overflow:auto;
+      padding: 12px;
+      display:grid;
+      gap:10px;
+    }
+    .msgRow{display:flex}
+    .msg{
+      max-width: 82%;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(16,24,40,.10);
+      background: rgba(16,24,40,.04);
+      color: rgba(16,24,40,.85);
+      font-size:.9rem;
+      line-height:1.45;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .msg.me{
+      margin-left:auto;
+      background: rgba(255,215,0,.18);
+      border-color: rgba(255,215,0,.35);
+      color: rgba(11,42,82,.95);
+    }
+    .chatInputRow{
+      display:flex;
+      gap:10px;
+      padding:10px;
+      border-top:1px solid rgba(16,24,40,.10);
+      align-items:center;
+      background: rgba(255,255,255,.92);
+    }
+    .chatInput{
+      flex:1;
+      border:1px solid rgba(16,24,40,.12);
+      border-radius: 14px;
+      padding:10px 12px;
+      outline:none;
+      font-size:.92rem;
+      background: rgba(255,255,255,.96);
+    }
+    .chatInput:focus{box-shadow: var(--focus); border-color: rgba(255,215,0,.65)}
+    .sendBtn{
+      width:46px;height:46px;border-radius:14px;
+      border:1px solid rgba(16,24,40,.10);
+      background: linear-gradient(135deg, var(--msu-blue), #022a55);
+      color:#fff;
+      font-weight:950;
+      cursor:pointer;
+    }
+    .sendBtn:focus-visible{outline:none; box-shadow: var(--focus)}
+    .chat-actions{
+      padding: 0 16px 16px;
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .btn-ghost{
+      background: rgba(16,24,40,.04);
+      border:1px solid rgba(16,24,40,.10);
+      color: rgba(16,24,40,.78);
+      box-shadow:none;
+      width:auto;
+      padding:10px 12px;
+      font-weight:900;
+    }
+
+    /* Settings modal */
+    .modal-overlay{
+      position:fixed; inset:0;
+      background: rgba(2, 16, 32, .55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:55;
+    }
+    .modal{
+      width:min(520px, 100%);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:16px;
+      border-bottom:1px solid rgba(16,24,40,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .modalHead h3{
+      margin:0;
+      color: var(--msu-blue);
+      font-size:1.05rem;
+      letter-spacing:.2px;
+      font-weight:950;
+    }
+    .modalBody{padding:16px}
+    .modalGrid{
+      display:grid;
+      gap:12px;
+    }
+    .hr{
+      height:1px;
+      background: rgba(16,24,40,.10);
+      margin: 10px 0;
+    }
+    .pillBtn{
+      width:auto;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(16,24,40,.12);
+      background: rgba(255,255,255,.92);
+      font-weight:950;
+      cursor:pointer;
+      color: rgba(16,24,40,.86);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .pillBtn:focus-visible{outline:none; box-shadow: var(--focus)}
+    .pillBtn.danger{border-color: rgba(179,0,0,.20); background: rgba(179,0,0,.06); color: var(--danger)}
+
+    /* Subtle enter animation */
+    @media (prefers-reduced-motion: no-preference){
+      .pop{animation: pop .22s ease}
+      @keyframes pop{from{transform: translateY(4px); opacity:.8} to{transform: translateY(0); opacity:1}}
+    }
   </style>
 </head>
 
@@ -570,7 +1032,16 @@
         <div class="subbrand">MSU student-only connect</div>
       </div>
     </div>
-    <button id="logoutBtn" class="logout-btn" type="button" onclick="logout()">Logout</button>
+
+    <div class="topActions">
+      <div id="sessionChip" class="chip" title="Session">
+        <span class="chipDot"></span>
+        <span id="sessionText">Verified</span>
+      </div>
+
+      <button id="settingsBtn" class="iconBtn" type="button" aria-label="Settings" title="Settings">⚙</button>
+      <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+    </div>
   </header>
 
   <!-- LOGIN -->
@@ -584,16 +1055,17 @@
           </p>
           <ul>
             <li><span class="dot"></span><span><b>Blur-to-reveal</b> for discretion.</span></li>
-            <li><span class="dot"></span><span><b>Student verification</b> via MSU email.</span></li>
-            <li><span class="dot"></span><span><b>Simple matching</b> with a clean interface.</span></li>
+            <li><span class="dot"></span><span><b>Filters + search</b> to find your vibe.</span></li>
+            <li><span class="dot"></span><span><b>Saved list</b> for your top picks.</span></li>
+            <li><span class="dot"></span><span><b>Keyboard shortcuts</b> for fast browsing.</span></li>
           </ul>
         </div>
-        <div class="note">Tip: Use your correct Reg Number format (e.g. R123456X).</div>
+        <div class="note">Tip: Reg format like <b>R123456X</b>. Email must end with <b>@students.msu.ac.zw</b>.</div>
       </div>
 
       <div class="login-box panel">
         <h2>Campus Login</h2>
-        <p>Enter your Reg Number and MSU student email to verify access.</p>
+        <p>Front-end demo with premium UI. Real verification would be server-side.</p>
 
         <div class="field">
           <label for="regNumber">Reg Number</label>
@@ -605,12 +1077,25 @@
           <input class="input" type="email" id="emailInput" value="@students.msu.ac.zw" placeholder="name@students.msu.ac.zw" autocomplete="off" />
         </div>
 
-        <button class="btn btn-primary" type="button" onclick="handleLogin()">
+        <div class="row" style="margin-bottom:12px;">
+          <div class="toggle" title="Remember session locally on this device">
+            <div id="rememberSwitch" class="switch" role="switch" aria-checked="false" tabindex="0"></div>
+            <span>Remember me</span>
+          </div>
+
+          <div class="toggle" title="Reduce animations if you prefer">
+            <div id="reducedMotionSwitch" class="switch" role="switch" aria-checked="false" tabindex="0"></div>
+            <span>Reduced motion</span>
+          </div>
+        </div>
+
+        <button id="loginBtn" class="btn btn-primary" type="button">
           Verify & Enter <span aria-hidden="true">→</span>
         </button>
 
-        <div class="helper">This is a front-end demo. Real verification would happen on a server.</div>
-        <div id="errorMsg" class="error-msg" role="alert">Invalid credentials.</div>
+        <div class="helper">
+          Pro tips: Press <b>Ctrl /</b> to focus search (inside the app). Press <b>R</b> request reveal, <b>S</b> save, <b>Esc</b> close modals.
+        </div>
       </div>
     </div>
   </section>
@@ -623,16 +1108,65 @@
           <h3>Discover</h3>
           <div class="statusPill" id="countPill">0 / 0</div>
         </div>
+
+        <!-- Premium toolbar -->
+        <div class="toolbar" aria-label="Filters and search">
+          <div class="toolbarLeft">
+            <div class="search" title="Search (Ctrl /)">
+              <span aria-hidden="true">⌕</span>
+              <input id="searchInput" type="text" placeholder="Search name, interests, campus, faculty..." />
+              <kbd>Ctrl /</kbd>
+            </div>
+
+            <select id="campusFilter" class="select" aria-label="Campus filter">
+              <option value="all">All campuses</option>
+              <option value="Gweru Main Campus">Gweru Main</option>
+              <option value="Zvishavane Campus">Zvishavane</option>
+            </select>
+
+            <select id="facultyFilter" class="select" aria-label="Faculty filter">
+              <option value="all">All faculties</option>
+              <option value="Arts">Arts</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Education">Education</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Economics">Economics</option>
+              <option value="Health Sciences">Health Sciences</option>
+              <option value="Hospitality">Hospitality</option>
+              <option value="Law School">Law School</option>
+              <option value="Media & Communication">Media & Communication</option>
+              <option value="Business Management">Business Management</option>
+              <option value="Science">Science</option>
+              <option value="Sports Science">Sports Science</option>
+              <option value="Creative Arts">Creative Arts</option>
+            </select>
+          </div>
+
+          <div class="toolbarRight">
+            <button id="clearFiltersBtn" class="pillBtn" type="button" title="Clear filters">Clear</button>
+            <button id="shuffleBtn" class="pillBtn" type="button" title="Shuffle results">Shuffle</button>
+          </div>
+        </div>
+
         <div class="panelBody">
           <div class="card-stack" id="cardContainer"></div>
+          <p id="emptyState" class="sr-only" aria-live="polite"></p>
         </div>
       </div>
 
       <aside class="mini">
         <div class="miniCard">
           <h4>How it works</h4>
-          <p>Tap <b>Request Reveal</b>. If the other person accepts, the photo clears and you can chat.</p>
+          <p>Tap <b>Request Reveal</b>. If the other person accepts, the photo clears and chat opens.</p>
           <div class="note">Safety: Don’t share passwords, banking info, or private addresses.</div>
+        </div>
+
+        <div class="miniCard">
+          <h4>Saved profiles</h4>
+          <p style="margin-bottom:10px;">Your shortlist stays on this device.</p>
+          <div id="savedList" class="smallList" aria-label="Saved profiles list"></div>
+          <div class="note">Tip: Press <b>S</b> to save / unsave.</div>
         </div>
 
         <div class="miniCard">
@@ -644,372 +1178,224 @@
   </section>
 
   <!-- CHAT MODAL -->
-  <div id="chatOverlay" class="chat-overlay" role="dialog" aria-modal="true" aria-label="Match dialog">
-    <div class="chat-box">
+  <div id="chatOverlay" class="chat-overlay" role="dialog" aria-modal="true" aria-label="Chat dialog">
+    <div class="chat-box pop">
       <div class="chat-top">
-        <h3>It’s a Match 🐘</h3>
-        <button class="xbtn" type="button" onclick="closeChat()" aria-label="Close">×</button>
+        <h3 id="chatTitle">Match</h3>
+        <button class="xbtn" type="button" id="closeChatBtn" aria-label="Close">×</button>
       </div>
+
       <div class="chat-body">
-        You both agreed to reveal. In a real app, this is where messaging would open.
+        <p class="chatSub" id="chatSub">Say hi. This is a front-end demo chat stored locally.</p>
+
+        <div class="chatMsgArea" aria-label="Chat messages">
+          <div id="chatMsgs" class="chatMsgs"></div>
+          <div class="chatInputRow">
+            <input id="chatInput" class="chatInput" placeholder="Type a message..." maxlength="240" />
+            <button id="sendBtn" class="sendBtn" type="button" aria-label="Send">➤</button>
+          </div>
+        </div>
       </div>
+
       <div class="chat-actions">
-        <button class="btn btn-primary" type="button" onclick="closeChat()">Continue</button>
+        <button id="endChatBtn" class="btn btn-ghost" type="button">End chat</button>
+        <button id="continueBtn" class="btn btn-primary" type="button" style="width:auto;">Continue</button>
       </div>
     </div>
   </div>
 
+  <!-- SETTINGS MODAL -->
+  <div id="settingsOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Settings dialog">
+    <div class="modal pop">
+      <div class="modalHead">
+        <h3>Settings</h3>
+        <button class="xbtn" type="button" id="closeSettingsBtn" aria-label="Close">×</button>
+      </div>
+      <div class="modalBody">
+        <div class="modalGrid">
+          <div>
+            <label style="display:block; margin-bottom:8px;">Reveal confirmation</label>
+            <button id="toggleConfirmBtn" class="pillBtn" type="button">On</button>
+          </div>
+
+          <div class="hr"></div>
+
+          <div>
+            <label style="display:block; margin-bottom:8px;">Reset local data</label>
+            <button id="resetDataBtn" class="pillBtn danger" type="button">Reset saved + chats</button>
+            <p style="margin:10px 0 0; color: rgba(102,112,133,.95); font-size:.86rem; line-height:1.5;">
+              This clears saved profiles, stored chats, filters, and remembered session (this device only).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toastWrap" id="toastWrap" aria-live="polite" aria-relevant="additions"></div>
+
   <script>
-    // Mock Data: Profiles available on campus
+    /***********************
+     * PREMIUM FEATURES ADDED
+     * - Local session remember (optional)
+     * - Search + campus/faculty filters + shuffle
+     * - Save shortlist (localStorage)
+     * - Local demo chat per profile (localStorage)
+     * - Keyboard shortcuts
+     * - Swipe gestures (mobile)
+     * - Toast notifications
+     * - Settings modal + reset data + confirm toggle
+     * - Reduced motion toggle
+     ************************/
+
+    // Mock Data: Profiles available on campus (your original list kept)
     const profiles = [
-      {
-        id: 1,
-        name: "Future Lawyer",
-        level: "Level 2.1",
-        faculty: "Law School",
-        campus: "Gweru Main Campus",
+      { id: 1, name: "Future Lawyer", level: "Level 2.1", faculty: "Law School", campus: "Gweru Main Campus",
         bio: "Spending too much time in the Great Hall. Looking for someone to study with.",
         interests: ["Moot Court", "Coffee", "Politics"],
         img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 2,
-        name: "Sci-Tech Guy",
-        level: "Level 4.1",
-        faculty: "Computer Science",
-        campus: "Zvishavane Campus",
+      { id: 2, name: "Sci-Tech Guy", level: "Level 4.1", faculty: "Computer Science", campus: "Zvishavane Campus",
         bio: "Coding all night, need a reason to go outside. I know the best food spots.",
         interests: ["Gaming", "Robotics", "Afrobeats"],
         img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 3,
-        name: "Arts & Culture",
-        level: "Level 1.2",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 3, name: "Arts & Culture", level: "Level 1.2", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "Love poetry nights and weekend trips. Let's meet at the student center.",
         interests: ["Poetry", "Travel", "Photography"],
         img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
       },
-
-      /* +20 PROFILES */
-      {
-        id: 4,
-        name: "Accounting Queen",
-        level: "Level 3.1",
-        faculty: "Commerce",
-        campus: "Gweru Main Campus",
+      { id: 4, name: "Accounting Queen", level: "Level 3.1", faculty: "Commerce", campus: "Gweru Main Campus",
         bio: "If I’m not balancing books, I’m balancing vibes. Let’s grab a drink after lectures.",
         interests: ["Accounting", "Soft Life", "Gospel"],
         img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 5,
-        name: "Quiet Medic",
-        level: "Level 2.2",
-        faculty: "Health Sciences",
-        campus: "Gweru Main Campus",
+      { id: 5, name: "Quiet Medic", level: "Level 2.2", faculty: "Health Sciences", campus: "Gweru Main Campus",
         bio: "Clinical days are long, but I still make time for meaningful conversations.",
         interests: ["Fitness", "Reading", "Healthy Meals"],
         img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 6,
-        name: "Engineering Mind",
-        level: "Level 4.2",
-        faculty: "Engineering",
-        campus: "Zvishavane Campus",
+      { id: 6, name: "Engineering Mind", level: "Level 4.2", faculty: "Engineering", campus: "Zvishavane Campus",
         bio: "I build solutions. Looking for someone who’s patient, funny, and real.",
         interests: ["Design", "Football", "Podcasts"],
         img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 7,
-        name: "Future Teacher",
-        level: "Level 3.2",
-        faculty: "Education",
-        campus: "Gweru Main Campus",
+      { id: 7, name: "Future Teacher", level: "Level 3.2", faculty: "Education", campus: "Gweru Main Campus",
         bio: "I’m big on kindness and good energy. Let’s learn each other slowly.",
         interests: ["Teaching", "Kids", "Nature Walks"],
         img: "https://images.unsplash.com/photo-1544005316-04ce686f9fef?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 8,
-        name: "Campus DJ",
-        level: "Level 2.1",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 8, name: "Campus DJ", level: "Level 2.1", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "I mix amapiano, afrobeats, and good moments. Say hi if you love music.",
         interests: ["DJing", "Amapiano", "Night Vibes"],
         img: "https://images.unsplash.com/photo-1524503033411-f6e95e9c8edc?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 9,
-        name: "Business Strategist",
-        level: "Level 4.1",
-        faculty: "Business Management",
-        campus: "Gweru Main Campus",
+      { id: 9, name: "Business Strategist", level: "Level 4.1", faculty: "Business Management", campus: "Gweru Main Campus",
         bio: "Ambition is attractive. I like dates that feel like plans for the future.",
         interests: ["Entrepreneurship", "Networking", "Coffee"],
         img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 10,
-        name: "Library Lover",
-        level: "Level 1.1",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 10, name: "Library Lover", level: "Level 1.1", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "I’m always in the library but I’m not boring — just focused. Surprise me.",
         interests: ["Books", "Study Dates", "Poetry"],
         img: "https://images.unsplash.com/photo-1544005314-599b1f2c0090?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 11,
-        name: "Sporty Gentleman",
-        level: "Level 3.1",
-        faculty: "Sports Science",
-        campus: "Gweru Main Campus",
+      { id: 11, name: "Sporty Gentleman", level: "Level 3.1", faculty: "Sports Science", campus: "Gweru Main Campus",
         bio: "Gym, class, repeat. Looking for someone who supports growth and laughs a lot.",
         interests: ["Gym", "Athletics", "Motivation"],
         img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 12,
-        name: "Nursing Sweetheart",
-        level: "Level 2.1",
-        faculty: "Health Sciences",
-        campus: "Gweru Main Campus",
+      { id: 12, name: "Nursing Sweetheart", level: "Level 2.1", faculty: "Health Sciences", campus: "Gweru Main Campus",
         bio: "I’m caring by nature. If you’re genuine, we’ll get along easily.",
         interests: ["Helping People", "R&B", "Cooking"],
         img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 13,
-        name: "Tech Girl",
-        level: "Level 3.1",
-        faculty: "Computer Science",
-        campus: "Zvishavane Campus",
+      { id: 13, name: "Tech Girl", level: "Level 3.1", faculty: "Computer Science", campus: "Zvishavane Campus",
         bio: "I love clean code and clean love. If you’re intentional, let’s talk.",
         interests: ["UI/UX", "Startups", "Afrobeats"],
         img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 14,
-        name: "Quiet Economist",
-        level: "Level 4.2",
-        faculty: "Economics",
-        campus: "Gweru Main Campus",
+      { id: 14, name: "Quiet Economist", level: "Level 4.2", faculty: "Economics", campus: "Gweru Main Campus",
         bio: "I’m calm, observant, and loyal. I like simple dates and deep talks.",
         interests: ["Economics", "Chess", "Documentaries"],
         img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 15,
-        name: "Fashion Forward",
-        level: "Level 2.2",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 15, name: "Fashion Forward", level: "Level 2.2", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "Style is my language. If you dress well and treat people well, we’ll vibe.",
         interests: ["Fashion", "Photos", "Soft Life"],
         img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 16,
-        name: "Campus Comedian",
-        level: "Level 1.2",
-        faculty: "Media & Communication",
-        campus: "Gweru Main Campus",
+      { id: 16, name: "Campus Comedian", level: "Level 1.2", faculty: "Media & Communication", campus: "Gweru Main Campus",
         bio: "I’ll make you laugh even on deadline week. Don’t take life too seriously.",
         interests: ["Comedy", "Content", "Movies"],
         img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 17,
-        name: "Future Lawyer (Alt)",
-        level: "Level 4.1",
-        faculty: "Law School",
-        campus: "Gweru Main Campus",
+      { id: 17, name: "Future Lawyer (Alt)", level: "Level 4.1", faculty: "Law School", campus: "Gweru Main Campus",
         bio: "I argue for a living, but I’m soft in real life. Let’s do coffee and peace.",
         interests: ["Law", "Coffee", "Debate"],
         img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 18,
-        name: "Shy Photographer",
-        level: "Level 3.2",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 18, name: "Shy Photographer", level: "Level 3.2", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "I capture moments, not attention. If you’re calm and kind, say hello.",
         interests: ["Photography", "Travel", "Sunsets"],
         img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 19,
-        name: "Research Babe",
-        level: "Level 4.2",
-        faculty: "Science",
-        campus: "Zvishavane Campus",
+      { id: 19, name: "Research Babe", level: "Level 4.2", faculty: "Science", campus: "Zvishavane Campus",
         bio: "I’m always doing a project. I like people who encourage and don’t disturb peace.",
         interests: ["Research", "Music", "Tea"],
         img: "https://images.unsplash.com/photo-1544005316-04ce686f9fef?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 20,
-        name: "Campus Chef",
-        level: "Level 2.1",
-        faculty: "Hospitality",
-        campus: "Gweru Main Campus",
+      { id: 20, name: "Campus Chef", level: "Level 2.1", faculty: "Hospitality", campus: "Gweru Main Campus",
         bio: "I can cook. You just need to be honest and hungry 😄",
         interests: ["Cooking", "Food Spots", "Laughs"],
         img: "https://images.unsplash.com/photo-1524503033411-f6e95e9c8edc?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 21,
-        name: "Soft Spoken Designer",
-        level: "Level 3.1",
-        faculty: "Creative Arts",
-        campus: "Gweru Main Campus",
+      { id: 21, name: "Soft Spoken Designer", level: "Level 3.1", faculty: "Creative Arts", campus: "Gweru Main Campus",
         bio: "I design posters and quiet love stories. If you’re respectful, we’ll connect.",
         interests: ["Design", "Art", "Chill Music"],
         img: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 22,
-        name: "Transport & Logistics",
-        level: "Level 4.1",
-        faculty: "Commerce",
-        campus: "Zvishavane Campus",
+      { id: 22, name: "Transport & Logistics", level: "Level 4.1", faculty: "Commerce", campus: "Zvishavane Campus",
         bio: "I like plans, time, and consistency. Let’s start with a simple conversation.",
         interests: ["Road Trips", "Business", "Afrobeats"],
         img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80"
       },
-      {
-        id: 23,
-        name: "Drama & Stage",
-        level: "Level 2.2",
-        faculty: "Arts",
-        campus: "Gweru Main Campus",
+      { id: 23, name: "Drama & Stage", level: "Level 2.2", faculty: "Arts", campus: "Gweru Main Campus",
         bio: "Theatre kid with a soft heart. If you’re fun, let’s link after rehearsal.",
         interests: ["Theatre", "Dance", "Movies"],
         img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80"
       }
     ];
 
-    let currentProfileIndex = 0;
+    /************
+     * Utilities
+     ************/
     const el = (id) => document.getElementById(id);
+    const LS = {
+      remember: "mbc_remember",
+      session: "mbc_session",
+      saved: "mbc_saved",
+      chats: "mbc_chats",
+      filters: "mbc_filters",
+      settings: "mbc_settings",
+      motion: "mbc_motion"
+    };
 
-    function setError(message) {
-      const box = el("errorMsg");
-      box.textContent = message;
-      box.style.display = "block";
-      setTimeout(() => (box.style.display = "none"), 3500);
-    }
-
-    function validReg(reg) {
-      return /^[Rr]\d{4,}[A-Za-z]$/.test(reg.trim());
-    }
-
-    function validMsuEmail(email) {
-      const v = email.trim().toLowerCase();
-      return /^[^\s@]+@students\.msu\.ac\.zw$/.test(v);
-    }
-
-    function handleLogin() {
-      const email = el("emailInput").value;
-      const reg = el("regNumber").value;
-
-      if (!validReg(reg)) return setError("Invalid Reg Number format (e.g. R123456X).");
-      if (!validMsuEmail(email)) return setError("Use a valid MSU email (name@students.msu.ac.zw).");
-
-      el("loginScreen").classList.remove("active");
-      el("appScreen").classList.add("active");
-      el("logoutBtn").style.display = "inline-flex";
-
-      currentProfileIndex = 0;
-      loadProfile();
-      updateCount();
-    }
-
-    function logout() {
-      location.reload();
-    }
-
-    function updateCount() {
-      el("countPill").textContent = `${Math.min(currentProfileIndex + 1, profiles.length)} / ${profiles.length}`;
-    }
-
-    function loadProfile() {
-      const container = el("cardContainer");
-
-      if (currentProfileIndex >= profiles.length) {
-        container.innerHTML = `
-          <div style="text-align:center; padding: 40px 10px;">
-            <h3 style="margin:0; color: var(--msu-blue);">No more profiles</h3>
-            <p style="margin:10px 0 0; color: var(--muted);">Check back later for more students.</p>
-            <button class="btn btn-primary" style="margin-top:18px; max-width: 280px;" onclick="location.reload()">Refresh</button>
-          </div>
-        `;
-        el("countPill").textContent = `${profiles.length} / ${profiles.length}`;
-        return;
-      }
-
-      const p = profiles[currentProfileIndex];
-
-      container.innerHTML = `
-        <article class="profile-card" aria-label="Student profile card">
-          <div class="image-container">
-            <div class="blind-badge" id="blindBadge"><i></i> Hidden Profile</div>
-            <img src="${p.img}" alt="Student profile photo" class="profile-img" id="currentImg" loading="lazy">
-          </div>
-
-          <div class="card-details">
-            <div class="topline">
-              <h3 class="name">${p.name}</h3>
-              <div class="level">${p.level}</div>
-            </div>
-
-            <p class="sub-info">${p.faculty} • ${p.campus}</p>
-            <p class="bio">“${p.bio}”</p>
-
-            <div class="tags" aria-label="Interests">
-              ${p.interests.map(i => `<span class="tag">#${escapeHtml(i)}</span>`).join("")}
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-skip" type="button" onclick="nextProfile()" aria-label="Skip">✕</button>
-              <button class="btn btn-reveal" type="button" onclick="requestReveal()">Request Reveal</button>
-            </div>
-          </div>
-        </article>
-      `;
-    }
-
-    function nextProfile() {
-      currentProfileIndex++;
-      updateCount();
-      loadProfile();
-    }
-
-    function requestReveal() {
-      const img = el("currentImg");
-      const badge = el("blindBadge");
-
-      const ok = confirm("Send a Reveal Request?\nIf they accept, the photo will unblur.");
-      if (!ok) return;
-
-      img.classList.add("revealed");
-      if (badge) badge.style.display = "none";
-
-      setTimeout(() => {
-        el("chatOverlay").style.display = "flex";
-      }, 650);
-    }
-
-    function closeChat() {
-      el("chatOverlay").style.display = "none";
-      nextProfile();
-    }
+    const state = {
+      all: [...profiles],
+      list: [...profiles],
+      idx: 0,
+      current: null,
+      saved: new Set(),
+      chats: {}, // { [profileId]: [{me:boolean, text:string, ts:number}] }
+      filters: { q:"", campus:"all", faculty:"all" },
+      settings: { confirmReveal: true },
+      reducedMotion: false,
+      dragging: false,
+      dragX: 0,
+      startX: 0
+    };
 
     function escapeHtml(str) {
       return String(str)
@@ -1019,6 +1405,807 @@
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
     }
+
+    function toast(type, title, message, ms=2800){
+      const wrap = el("toastWrap");
+      const t = document.createElement("div");
+      t.className = "toast";
+      const iconMap = { ok:"✓", err:"!", info:"i", warn:"!" };
+      const icon = iconMap[type] || "i";
+      t.innerHTML = `
+        <div class="ticon" aria-hidden="true">${icon}</div>
+        <div class="tmain">
+          <p class="ttitle">${escapeHtml(title)}</p>
+          <p class="tmsg">${escapeHtml(message)}</p>
+        </div>
+        <button class="tclose" type="button" aria-label="Close toast">×</button>
+      `;
+      wrap.appendChild(t);
+      const close = () => {
+        t.style.transition = "opacity .18s ease, transform .18s ease";
+        t.style.opacity = "0";
+        t.style.transform = "translateY(10px)";
+        setTimeout(()=> t.remove(), 180);
+      };
+      t.querySelector(".tclose").addEventListener("click", close);
+      setTimeout(close, ms);
+    }
+
+    function validReg(reg) {
+      return /^[Rr]\d{4,}[A-Za-z]$/.test(reg.trim());
+    }
+    function validMsuEmail(email) {
+      const v = email.trim().toLowerCase();
+      return /^[^\s@]+@students\.msu\.ac\.zw$/.test(v);
+    }
+
+    function saveLS(key, value){
+      try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){}
+    }
+    function loadLS(key, fallback){
+      try{
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch(e){ return fallback; }
+    }
+
+    function openOverlay(id){
+      el(id).style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    function closeOverlay(id){
+      el(id).style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function applyReducedMotion(on){
+      state.reducedMotion = !!on;
+      saveLS(LS.motion, state.reducedMotion);
+      // quick + safe: just shorten transitions by toggling inline style
+      document.documentElement.style.scrollBehavior = on ? "auto" : "";
+      toast("info","Motion", on ? "Reduced motion enabled." : "Reduced motion disabled.", 1800);
+    }
+
+    /************
+     * Session + Settings
+     ************/
+    const rememberSwitch = el("rememberSwitch");
+    const reducedMotionSwitch = el("reducedMotionSwitch");
+    const loginBtn = el("loginBtn");
+
+    function setSwitch(node, on){
+      node.classList.toggle("on", !!on);
+      node.setAttribute("aria-checked", !!on ? "true" : "false");
+    }
+
+    function initSettings(){
+      const savedSettings = loadLS(LS.settings, null);
+      if (savedSettings && typeof savedSettings.confirmReveal === "boolean") {
+        state.settings.confirmReveal = savedSettings.confirmReveal;
+      }
+      const rm = loadLS(LS.motion, false);
+      setSwitch(reducedMotionSwitch, rm);
+      state.reducedMotion = !!rm;
+    }
+
+    function toggleSwitch(node, cb){
+      const on = !node.classList.contains("on");
+      setSwitch(node, on);
+      cb(on);
+    }
+
+    rememberSwitch.addEventListener("click", () => toggleSwitch(rememberSwitch, (on)=> saveLS(LS.remember, on)));
+    rememberSwitch.addEventListener("keydown", (e)=>{
+      if(e.key==="Enter"||e.key===" "){ e.preventDefault(); rememberSwitch.click(); }
+    });
+
+    reducedMotionSwitch.addEventListener("click", () => toggleSwitch(reducedMotionSwitch, applyReducedMotion));
+    reducedMotionSwitch.addEventListener("keydown", (e)=>{
+      if(e.key==="Enter"||e.key===" "){ e.preventDefault(); reducedMotionSwitch.click(); }
+    });
+
+    function setLoggedInUI(on){
+      el("logoutBtn").style.display = on ? "inline-flex" : "none";
+      el("settingsBtn").style.display = on ? "grid" : "none";
+      el("sessionChip").style.display = on ? "inline-flex" : "none";
+    }
+
+    function loginFlow(){
+      const email = el("emailInput").value;
+      const reg = el("regNumber").value;
+      const remember = loadLS(LS.remember, false);
+
+      if (!validReg(reg)) { toast("err","Login failed","Invalid Reg Number format (e.g. R123456X)."); return; }
+      if (!validMsuEmail(email)) { toast("err","Login failed","Use a valid MSU email (name@students.msu.ac.zw)."); return; }
+
+      const session = { reg: reg.trim().toUpperCase(), email: email.trim().toLowerCase(), ts: Date.now() };
+      if (remember) saveLS(LS.session, session);
+
+      el("sessionText").textContent = session.reg;
+      el("loginScreen").classList.remove("active");
+      el("appScreen").classList.add("active");
+      setLoggedInUI(true);
+
+      hydrateLocalData();
+      rebuildListAndRender(true);
+      toast("ok","Welcome", `Verified as ${session.reg}.`, 2000);
+    }
+
+    loginBtn.addEventListener("click", loginFlow);
+
+    function logout(){
+      // keep local saved unless user resets explicitly
+      localStorage.removeItem(LS.session);
+      location.reload();
+    }
+    el("logoutBtn").addEventListener("click", logout);
+
+    /************
+     * Local data (saved + chats + filters)
+     ************/
+    function hydrateLocalData(){
+      const savedArr = loadLS(LS.saved, []);
+      state.saved = new Set(Array.isArray(savedArr) ? savedArr : []);
+      state.chats = loadLS(LS.chats, {}) || {};
+      const storedFilters = loadLS(LS.filters, null);
+      if (storedFilters && typeof storedFilters === "object"){
+        state.filters = { ...state.filters, ...storedFilters };
+      }
+      renderSaved();
+      applyFiltersToControls();
+    }
+
+    function persistSaved(){
+      saveLS(LS.saved, Array.from(state.saved));
+    }
+    function persistChats(){
+      saveLS(LS.chats, state.chats);
+    }
+    function persistFilters(){
+      saveLS(LS.filters, state.filters);
+    }
+    function persistSettings(){
+      saveLS(LS.settings, state.settings);
+    }
+
+    /************
+     * Filters + Search
+     ************/
+    const searchInput = el("searchInput");
+    const campusFilter = el("campusFilter");
+    const facultyFilter = el("facultyFilter");
+
+    function applyFiltersToControls(){
+      searchInput.value = state.filters.q || "";
+      campusFilter.value = state.filters.campus || "all";
+      facultyFilter.value = state.filters.faculty || "all";
+    }
+
+    function matches(profile, q){
+      if (!q) return true;
+      const text = [
+        profile.name, profile.level, profile.faculty, profile.campus,
+        ...(profile.interests || []),
+        profile.bio
+      ].join(" ").toLowerCase();
+      return text.includes(q.toLowerCase().trim());
+    }
+
+    function rebuildListAndRender(resetIndex=false){
+      const q = (state.filters.q || "").trim();
+      const campus = state.filters.campus || "all";
+      const faculty = state.filters.faculty || "all";
+
+      let next = state.all.filter(p => matches(p, q));
+
+      if (campus !== "all") next = next.filter(p => p.campus === campus);
+      if (faculty !== "all") next = next.filter(p => p.faculty === faculty);
+
+      state.list = next;
+
+      if (resetIndex) state.idx = 0;
+      state.idx = Math.min(state.idx, Math.max(0, state.list.length - 1));
+
+      updateCount();
+      loadProfile();
+      announceEmptyState();
+    }
+
+    function announceEmptyState(){
+      const msg = el("emptyState");
+      if (state.list.length === 0){
+        msg.textContent = "No profiles match your filters.";
+      } else {
+        msg.textContent = "";
+      }
+    }
+
+    let searchTimer = null;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(()=>{
+        state.filters.q = searchInput.value;
+        persistFilters();
+        rebuildListAndRender(true);
+      }, 120);
+    });
+
+    campusFilter.addEventListener("change", ()=>{
+      state.filters.campus = campusFilter.value;
+      persistFilters();
+      rebuildListAndRender(true);
+    });
+    facultyFilter.addEventListener("change", ()=>{
+      state.filters.faculty = facultyFilter.value;
+      persistFilters();
+      rebuildListAndRender(true);
+    });
+
+    el("clearFiltersBtn").addEventListener("click", ()=>{
+      state.filters = { q:"", campus:"all", faculty:"all" };
+      persistFilters();
+      applyFiltersToControls();
+      rebuildListAndRender(true);
+      toast("info","Filters cleared","Showing all profiles.", 1800);
+    });
+
+    function shuffleArray(arr){
+      const a = [...arr];
+      for (let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    el("shuffleBtn").addEventListener("click", ()=>{
+      state.list = shuffleArray(state.list);
+      state.idx = 0;
+      updateCount();
+      loadProfile();
+      toast("info","Shuffled","Fresh order applied.", 1800);
+    });
+
+    /************
+     * Discover card rendering
+     ************/
+    function updateCount() {
+      const n = state.list.length;
+      const shown = n === 0 ? 0 : Math.min(state.idx + 1, n);
+      el("countPill").textContent = `${shown} / ${n}`;
+    }
+
+    function computeStats(profile){
+      const isSaved = state.saved.has(profile.id);
+      const chatLen = (state.chats[profile.id] || []).length;
+      const revealState = isRevealed(profile.id);
+      return { isSaved, chatLen, revealState };
+    }
+
+    function isRevealed(profileId){
+      // demo rule: revealed if chat exists or if saved reveal flag stored in chats meta
+      const thread = state.chats[profileId];
+      return !!(thread && thread.__revealed);
+    }
+    function setRevealed(profileId, on){
+      state.chats[profileId] = state.chats[profileId] || [];
+      state.chats[profileId].__revealed = !!on;
+      persistChats();
+    }
+
+    function loadProfile() {
+      const container = el("cardContainer");
+      container.innerHTML = "";
+
+      if (state.list.length === 0){
+        container.innerHTML = `
+          <div style="text-align:center; padding: 44px 10px;">
+            <h3 style="margin:0; color: var(--msu-blue); font-weight:950;">No matches</h3>
+            <p style="margin:10px 0 0; color: var(--muted);">Try clearing filters or searching less.</p>
+            <button class="btn btn-primary" style="margin-top:18px; max-width: 280px;" id="tryAllBtn">Show all</button>
+          </div>
+        `;
+        const btn = document.getElementById("tryAllBtn");
+        if (btn) btn.addEventListener("click", ()=> el("clearFiltersBtn").click());
+        return;
+      }
+
+      if (state.idx >= state.list.length){
+        state.idx = state.list.length - 1;
+      }
+
+      const p = state.list[state.idx];
+      state.current = p;
+
+      const { isSaved, chatLen, revealState } = computeStats(p);
+      const initials = p.name.split(" ").slice(0,2).map(s=>s[0]).join("").toUpperCase();
+
+      const revealedClass = revealState ? "revealed" : "";
+      const badgeStyle = revealState ? "display:none" : "";
+
+      container.innerHTML = `
+        <article class="profile-card" id="profileCard" aria-label="Student profile card">
+          <div class="swipeHint" id="swipeHint" aria-hidden="true"></div>
+
+          <div class="image-container">
+            <div class="blind-badge" id="blindBadge" style="${badgeStyle}"><i></i> Hidden Profile</div>
+            <img src="${p.img}" alt="Student profile photo" class="profile-img ${revealedClass}" id="currentImg" loading="lazy">
+          </div>
+
+          <div class="card-details">
+            <div class="topline">
+              <h3 class="name">${escapeHtml(p.name)}</h3>
+              <div class="level">${escapeHtml(p.level)}</div>
+            </div>
+
+            <p class="sub-info">${escapeHtml(p.faculty)} • ${escapeHtml(p.campus)}</p>
+            <p class="bio">“${escapeHtml(p.bio)}”</p>
+
+            <div class="stats" aria-label="Profile stats">
+              <span class="stat"><b>${(p.interests||[]).length}</b> interests</span>
+              <span class="stat"><b>${chatLen}</b> messages</span>
+              <span class="stat"><b>${isSaved ? "Saved" : "Not saved"}</b></span>
+            </div>
+
+            <div class="tags" aria-label="Interests">
+              ${(p.interests || []).map(i => `<span class="tag">#${escapeHtml(i)}</span>`).join("")}
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-skip" type="button" id="skipBtn" aria-label="Skip">✕</button>
+              <button class="btn btn-save" type="button" id="saveBtn" aria-label="Save">${isSaved ? "★" : "☆"}</button>
+              <button class="btn btn-reveal" type="button" id="revealBtn">${revealState ? "Open Chat" : "Request Reveal"}</button>
+            </div>
+
+            <div class="fineprint">
+              Shortcuts: <b>←</b> skip • <b>S</b> save • <b>R</b> reveal/chat • <b>Ctrl /</b> search
+              <br/>Mobile: swipe <b>left</b> to skip, <b>right</b> to reveal.
+            </div>
+          </div>
+        </article>
+      `;
+
+      // Bind actions
+      el("skipBtn").addEventListener("click", () => nextProfile(true));
+      el("saveBtn").addEventListener("click", toggleSaveCurrent);
+      el("revealBtn").addEventListener("click", requestRevealOrChat);
+
+      // Swipe gestures
+      initSwipe();
+    }
+
+    function nextProfile(userInitiated=false) {
+      if (state.list.length === 0) return;
+      state.idx++;
+      if (state.idx >= state.list.length) {
+        // end state
+        const container = el("cardContainer");
+        container.innerHTML = `
+          <div style="text-align:center; padding: 44px 10px;">
+            <h3 style="margin:0; color: var(--msu-blue); font-weight:950;">End of list</h3>
+            <p style="margin:10px 0 0; color: var(--muted);">Shuffle or change filters to see more.</p>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+              <button class="btn btn-primary" style="max-width: 220px;" id="shuffleEndBtn">Shuffle</button>
+              <button class="btn btn-ghost" style="width:auto;" id="backStartBtn">Back to start</button>
+            </div>
+          </div>
+        `;
+        el("countPill").textContent = `${state.list.length} / ${state.list.length}`;
+        const a = document.getElementById("shuffleEndBtn");
+        const b = document.getElementById("backStartBtn");
+        if (a) a.addEventListener("click", ()=> el("shuffleBtn").click());
+        if (b) b.addEventListener("click", ()=> { state.idx = 0; updateCount(); loadProfile(); });
+        if (userInitiated) toast("info","Skipped","Moved to next profile.", 1200);
+        return;
+      }
+
+      updateCount();
+      loadProfile();
+      if (userInitiated) toast("info","Skipped","Moved to next profile.", 1200);
+    }
+
+    function toggleSaveCurrent(){
+      const p = state.current;
+      if (!p) return;
+
+      if (state.saved.has(p.id)){
+        state.saved.delete(p.id);
+        toast("info","Removed", `${p.name} removed from saved.`, 1600);
+      } else {
+        state.saved.add(p.id);
+        toast("ok","Saved", `${p.name} added to saved.`, 1600);
+      }
+      persistSaved();
+      renderSaved();
+      loadProfile(); // refresh star
+    }
+
+    function renderSaved(){
+      const wrap = el("savedList");
+      wrap.innerHTML = "";
+
+      const ids = Array.from(state.saved);
+      if (ids.length === 0){
+        wrap.innerHTML = `<p style="margin:0; color: rgba(102,112,133,.95); font-size:.88rem;">No saved profiles yet.</p>`;
+        return;
+      }
+
+      const list = ids
+        .map(id => state.all.find(p => p.id === id))
+        .filter(Boolean)
+        .slice(0, 8);
+
+      for (const p of list){
+        const initials = p.name.split(" ").slice(0,2).map(s=>s[0]).join("").toUpperCase();
+        const item = document.createElement("div");
+        item.className = "savedItem";
+        item.innerHTML = `
+          <div class="avatar" aria-hidden="true">${escapeHtml(initials)}</div>
+          <div class="savedMeta">
+            <p class="savedName">${escapeHtml(p.name)}</p>
+            <p class="savedSub">${escapeHtml(p.faculty)} • ${escapeHtml(p.campus)}</p>
+          </div>
+          <button class="miniBtn" type="button" title="Open" aria-label="Open">→</button>
+        `;
+        item.querySelector(".miniBtn").addEventListener("click", ()=>{
+          // jump to profile if exists in current filtered list; else show toast
+          const i = state.list.findIndex(x => x.id === p.id);
+          if (i >= 0){
+            state.idx = i;
+            updateCount();
+            loadProfile();
+            toast("ok","Opened", `Showing ${p.name}.`, 1400);
+          } else {
+            toast("warn","Not in list","This profile is hidden by your filters. Clear filters to view.", 2600);
+          }
+        });
+        wrap.appendChild(item);
+      }
+    }
+
+    /************
+     * Reveal -> chat
+     ************/
+    function requestRevealOrChat(){
+      const p = state.current;
+      if (!p) return;
+
+      if (isRevealed(p.id)){
+        openChat(p, true);
+        return;
+      }
+
+      if (state.settings.confirmReveal){
+        const ok = confirm("Send a Reveal Request?\nIf they accept, the photo will unblur and chat opens.");
+        if (!ok) return;
+      }
+
+      // Demo accept rate (premium feel)
+      const accepted = Math.random() < 0.82;
+      if (!accepted){
+        toast("warn","No response yet", "They haven’t accepted your request. Try later.", 2600);
+        return;
+      }
+
+      // Reveal
+      const img = el("currentImg");
+      const badge = el("blindBadge");
+      if (img) img.classList.add("revealed");
+      if (badge) badge.style.display = "none";
+
+      setRevealed(p.id, true);
+      toast("ok","Match", "They accepted. Chat opened.", 2000);
+
+      setTimeout(()=> openChat(p, false), state.reducedMotion ? 0 : 450);
+    }
+
+    function openChat(profile, fromOpenBtn){
+      el("chatTitle").textContent = fromOpenBtn ? `Chat • ${profile.name}` : `It’s a Match • ${profile.name}`;
+      el("chatSub").textContent = "Demo chat stored locally. Refresh won’t delete unless you reset.";
+
+      renderChat(profile.id);
+      openOverlay("chatOverlay");
+      setTimeout(()=> el("chatInput").focus(), 0);
+    }
+
+    function renderChat(profileId){
+      const msgsWrap = el("chatMsgs");
+      msgsWrap.innerHTML = "";
+
+      const thread = (state.chats[profileId] || []).filter(x => typeof x === "object" && "text" in x);
+      if (thread.length === 0){
+        const tip = document.createElement("div");
+        tip.style.color = "rgba(102,112,133,.95)";
+        tip.style.fontSize = ".88rem";
+        tip.style.lineHeight = "1.45";
+        tip.textContent = "Start the conversation. Try: “Hey, how’s your week going?”";
+        msgsWrap.appendChild(tip);
+      } else {
+        for (const m of thread){
+          const row = document.createElement("div");
+          row.className = "msgRow";
+          const bubble = document.createElement("div");
+          bubble.className = "msg" + (m.me ? " me" : "");
+          bubble.textContent = m.text;
+          row.appendChild(bubble);
+          msgsWrap.appendChild(row);
+        }
+      }
+
+      msgsWrap.scrollTop = msgsWrap.scrollHeight;
+    }
+
+    function pushMessage(profileId, me, text){
+      const t = String(text || "").trim();
+      if (!t) return;
+
+      state.chats[profileId] = state.chats[profileId] || [];
+      state.chats[profileId].push({ me: !!me, text: t, ts: Date.now() });
+
+      // Auto reply (demo)
+      if (me){
+        const replies = [
+          "😂 that’s funny. How are lectures going?",
+          "Nice. What level are you in this semester?",
+          "I’m around campus later. What do you usually do after classes?",
+          "Same here. What music are you into?",
+          "Cool. What’s your faculty?"
+        ];
+        const r = replies[Math.floor(Math.random()*replies.length)];
+        setTimeout(()=>{
+          state.chats[profileId].push({ me:false, text:r, ts: Date.now() });
+          persistChats();
+          renderChat(profileId);
+        }, state.reducedMotion ? 0 : 650);
+      }
+
+      persistChats();
+      renderChat(profileId);
+    }
+
+    el("sendBtn").addEventListener("click", ()=>{
+      const p = state.current;
+      if (!p) return;
+      const input = el("chatInput");
+      pushMessage(p.id, true, input.value);
+      input.value = "";
+      input.focus();
+    });
+    el("chatInput").addEventListener("keydown", (e)=>{
+      if (e.key === "Enter"){
+        e.preventDefault();
+        el("sendBtn").click();
+      }
+    });
+
+    function closeChat(){
+      closeOverlay("chatOverlay");
+    }
+    el("closeChatBtn").addEventListener("click", closeChat);
+    el("continueBtn").addEventListener("click", closeChat);
+    el("endChatBtn").addEventListener("click", ()=>{
+      closeChat();
+      nextProfile(false);
+    });
+
+    // click outside to close
+    el("chatOverlay").addEventListener("click", (e)=>{
+      if (e.target === el("chatOverlay")) closeChat();
+    });
+
+    /************
+     * Swipe gestures
+     ************/
+    function initSwipe(){
+      const card = el("profileCard");
+      if (!card) return;
+
+      const hint = el("swipeHint");
+      const showHint = (type)=>{
+        if (!hint) return;
+        hint.className = "swipeHint show";
+        const badge = document.createElement("div");
+        badge.className = "hintBadge " + (type==="good" ? "good" : "bad");
+        badge.textContent = type === "good" ? "REVEAL" : "SKIP";
+        hint.innerHTML = "";
+        hint.appendChild(badge);
+      };
+      const hideHint = ()=>{
+        if (!hint) return;
+        hint.className = "swipeHint";
+        hint.innerHTML = "";
+      };
+
+      const threshold = 90;
+
+      const onDown = (x)=>{
+        state.dragging = true;
+        state.startX = x;
+        state.dragX = 0;
+        hideHint();
+      };
+      const onMove = (x)=>{
+        if (!state.dragging) return;
+        state.dragX = x - state.startX;
+        const dx = state.dragX;
+        const rot = Math.max(-10, Math.min(10, dx / 18));
+        card.style.transition = "none";
+        card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+
+        if (Math.abs(dx) > 30){
+          showHint(dx > 0 ? "good" : "bad");
+        } else {
+          hideHint();
+        }
+      };
+      const onUp = ()=>{
+        if (!state.dragging) return;
+        state.dragging = false;
+
+        const dx = state.dragX;
+        hideHint();
+
+        card.style.transition = state.reducedMotion ? "none" : "transform .18s ease";
+        card.style.transform = "translateX(0) rotate(0)";
+
+        if (dx > threshold){
+          requestRevealOrChat();
+        } else if (dx < -threshold){
+          nextProfile(true);
+        }
+      };
+
+      // touch
+      card.addEventListener("touchstart", (e)=> onDown(e.touches[0].clientX), {passive:true});
+      card.addEventListener("touchmove", (e)=> onMove(e.touches[0].clientX), {passive:true});
+      card.addEventListener("touchend", onUp);
+
+      // mouse
+      card.addEventListener("mousedown", (e)=> { onDown(e.clientX); });
+      window.addEventListener("mousemove", (e)=> onMove(e.clientX));
+      window.addEventListener("mouseup", onUp);
+    }
+
+    /************
+     * Keyboard shortcuts
+     ************/
+    document.addEventListener("keydown", (e)=>{
+      const appActive = el("appScreen").classList.contains("active");
+      if (!appActive) return;
+
+      const overlayOpen =
+        el("chatOverlay").style.display === "flex" ||
+        el("settingsOverlay").style.display === "flex";
+
+      // Ctrl / focuses search
+      if (e.ctrlKey && e.key === "/"){
+        e.preventDefault();
+        searchInput.focus();
+        return;
+      }
+
+      if (e.key === "Escape"){
+        if (el("chatOverlay").style.display === "flex") closeChat();
+        if (el("settingsOverlay").style.display === "flex") closeOverlay("settingsOverlay");
+        return;
+      }
+
+      if (overlayOpen) return;
+
+      if (e.key === "ArrowLeft"){
+        e.preventDefault();
+        nextProfile(true);
+      }
+      if (e.key.toLowerCase() === "s"){
+        e.preventDefault();
+        toggleSaveCurrent();
+      }
+      if (e.key.toLowerCase() === "r"){
+        e.preventDefault();
+        requestRevealOrChat();
+      }
+    });
+
+    /************
+     * Settings modal controls
+     ************/
+    el("settingsBtn").addEventListener("click", ()=> openOverlay("settingsOverlay"));
+    el("closeSettingsBtn").addEventListener("click", ()=> closeOverlay("settingsOverlay"));
+    el("settingsOverlay").addEventListener("click", (e)=>{
+      if (e.target === el("settingsOverlay")) closeOverlay("settingsOverlay");
+    });
+
+    const toggleConfirmBtn = el("toggleConfirmBtn");
+    function refreshConfirmBtn(){
+      toggleConfirmBtn.textContent = state.settings.confirmReveal ? "On" : "Off";
+    }
+    refreshConfirmBtn();
+
+    toggleConfirmBtn.addEventListener("click", ()=>{
+      state.settings.confirmReveal = !state.settings.confirmReveal;
+      persistSettings();
+      refreshConfirmBtn();
+      toast("info","Reveal confirmation", state.settings.confirmReveal ? "Enabled" : "Disabled", 1800);
+    });
+
+    el("resetDataBtn").addEventListener("click", ()=>{
+      const ok = confirm("Reset local data?\nThis clears saved profiles, chats, filters, and remembered session on this device.");
+      if (!ok) return;
+
+      localStorage.removeItem(LS.saved);
+      localStorage.removeItem(LS.chats);
+      localStorage.removeItem(LS.filters);
+      localStorage.removeItem(LS.session);
+
+      toast("ok","Reset complete","Reloading…", 1200);
+      setTimeout(()=> location.reload(), state.reducedMotion ? 0 : 700);
+    });
+
+    /************
+     * Boot
+     ************/
+    function bootAutoLoginIfRemembered(){
+      initSettings();
+
+      const remember = loadLS(LS.remember, false);
+      setSwitch(rememberSwitch, remember);
+
+      const session = loadLS(LS.session, null);
+      if (remember && session && session.reg && session.email){
+        el("sessionText").textContent = session.reg;
+        el("loginScreen").classList.remove("active");
+        el("appScreen").classList.add("active");
+        setLoggedInUI(true);
+
+        hydrateLocalData();
+        rebuildListAndRender(true);
+        toast("ok","Welcome back", `Signed in as ${session.reg}.`, 1800);
+      } else {
+        setLoggedInUI(false);
+      }
+    }
+
+    function rebuildListAndRenderInitial(){
+      // called after session transition
+      rebuildListAndRender(true);
+    }
+
+    function rebuildListAndRender(fromLogin){
+      // ensure list exists (filters apply)
+      const q = (state.filters.q || "").trim();
+      const campus = state.filters.campus || "all";
+      const faculty = state.filters.faculty || "all";
+
+      let next = state.all.filter(p => matches(p, q));
+      if (campus !== "all") next = next.filter(p => p.campus === campus);
+      if (faculty !== "all") next = next.filter(p => p.faculty === faculty);
+
+      state.list = next;
+
+      if (fromLogin) state.idx = 0;
+      state.idx = Math.min(state.idx, Math.max(0, state.list.length - 1));
+
+      updateCount();
+      loadProfile();
+      announceEmptyState();
+    }
+
+    bootAutoLoginIfRemembered();
+
+    // Prevent accidental form submit feel
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "Enter" && el("loginScreen").classList.contains("active")){
+        const a = document.activeElement;
+        if (a && (a.id === "regNumber" || a.id === "emailInput")) {
+          e.preventDefault();
+          loginBtn.click();
+        }
+      }
+    });
+
+    // Smooth focus to login button usability
+    el("regNumber").addEventListener("input", ()=>{ /* no-op */ });
+
   </script>
 </body>
 </html>
+```
